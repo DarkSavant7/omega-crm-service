@@ -1,0 +1,55 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /omega
+  compression:
+    mime-types: text/html, text/xml, text/plain, text/css, text/javascript, application/javascript, application/json, application/xml, image/png, image/jpg, image/gif, image/jpeg
+spring:
+  output:
+    ansi:
+      enabled: always
+  main:
+    banner-mode: console
+  application:
+    name: telemed
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=telemed
+    username: postgres
+    password: admin
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+        format_sql: true
+        cache:
+          use_second_level_cache: true
+          region:
+            factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 5MB
+      max-request-size: 20MB
+  flyway:
+    encoding: UTF-8
+    create-schemas: true
+    schemas: omega
+  jackson:
+    time-zone: Europe/Moscow
+storage:
+  avatar:
+    location: avatars
+  files:
+    location: files
+#http://www.cronmaker.com/
+scheduling:
+  timing:
+
+  cron:
+
+jwt:
+  secret: hbav1ouefvoua1234effvouebviuo2332432$l4j23our34ouht08sljccdf234@lefb
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_OVERALL" class="ch.qos.logback.core.FileAppender">
+        <file>log/full.log</file>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_CONTROLLERS" class="ch.qos.logback.core.FileAppender">
+        <file>log/controllers-journal.log</file>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} :: %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_JOURNAL" class="ch.qos.logback.core.FileAppender">
+        <file>log/user-journal.log</file>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} :: %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.FileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <file>log/error.log</file>
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_OVERALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </root>
+    <logger name="org.springframework.web" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_OVERALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </logger>
+    <logger name="org.springframework.Hibernate" level="ERROR" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_OVERALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </logger>
+    <logger name="org.springframework.Data" level="ERROR" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_OVERALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+    </logger>
+    <logger name="ru.darksavant" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_OVERALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+        <appender-ref ref="FILE_JOURNAL"/>
+    </logger>
+    <logger name="ru.darksavant.omegacrmservice.*.controllers" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_OVERALL"/>
+        <appender-ref ref="FILE_ERROR"/>
+        <appender-ref ref="FILE_JOURNAL"/>
+        <appender-ref ref="FILE_CONTROLLERS"/>
+    </logger>
+</configuration>
