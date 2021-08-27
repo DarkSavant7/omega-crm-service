@@ -66,7 +66,7 @@ create table producers
     id          bigserial primary key,
     id_contact  bigint  not null references contacts (id),
     designation varchar(255) unique,
-    INN         integer not null unique,
+    INN         bigint not null unique,
     description varchar(255),
     web_site    varchar(255),
     created_at  timestamp default current_timestamp,

@@ -9,7 +9,6 @@ import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
@@ -26,46 +25,35 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "users")
+@Table(name = "producers")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User {
+public class Producer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Username must NOT be empty")
-    @NotEmpty(message = "Username must NOT be empty")
-    @Length(message = "Must be in 4..255 digits", min = 3, max = 255)
-    @NotNull(message = "Username must NOT be empty")
-    @Column(name = "username", unique = true)
-    private String username;
+    @OneToOne
+    @JoinColumn(name="id_contact ")
+    private Contact contact;
 
-    @NotBlank(message = "Password must NOT be empty")
-    @NotEmpty(message = "Password must NOT be empty")
-    @Length(message = "Must be in 8..255 digits", min = 3, max = 255)
-    @NotNull(message = "Password must NOT be empty")
-    @Column(name = "password")
-    private String password;
+    @Column(name ="designation",unique = true)
+    private String designation;
 
-    @Column(name = "email")
-    @Email(message = "It must be email")
-    private String email;
+    @NotBlank(message = "INN must NOT be empty")
+    @NotEmpty(message = "INN must NOT be empty")
+    @Length(message = "INN must be 12 digits", min = 12, max = 12)
+    @NotNull(message = "INN must NOT be empty")
+    @Column(name = "INN",unique = true)
+    private long INN;
 
-    @NotNull (message = "Status must NOT be empty")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private UserStatus status;
+    @Column(name = "description")
+    private String description;
 
-    @ManyToMany
-    @JoinTable(name = "users_roles",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @ToString.Exclude
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Role> roles;
+    @Column(name = "website")
+    private String website;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -75,11 +63,19 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToMany
+    @JoinTable(name = "good_producer",
+            joinColumns = @JoinColumn(name = "producer_id"),
+            inverseJoinColumns = @JoinColumn(name = "goods_id "))
+    @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Good> goods;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
+        Producer user = (Producer) o;
 
         return Objects.equals(id, user.id);
     }
