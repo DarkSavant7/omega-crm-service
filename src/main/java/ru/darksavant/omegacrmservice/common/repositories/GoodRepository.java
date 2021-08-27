@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface GoodRepository extends JpaRepository<Good,Long> {
 
-    Optional<Good> findGoodByVendorCode(String code);
+    Optional<Good> findGoodByVendorCode(int code);
 
     Optional<Good> findGoodByTitle(String title);
 

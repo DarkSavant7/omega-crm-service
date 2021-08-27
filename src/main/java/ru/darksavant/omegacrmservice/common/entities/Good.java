@@ -40,12 +40,12 @@ public class Good {
     @NotNull(message = "Vendor code must NOT be empty")
     @NotEmpty(message = "Vendor code must NOT be empty")
     @Column(name = "vendor_code", unique = true)
-    private String vendorCode;
+    private int vendorCode;
 
     @NotBlank(message = "Title must NOT be empty")
     @NotNull(message = "Title must NOT be empty")
     @NotEmpty(message = "Title must NOT be empty")
-    @Column(name = "vendor_code")
+    @Column(name = "title")
     private String title;
 
     @NotBlank(message = "Price must NOT be empty")
