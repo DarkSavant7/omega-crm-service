@@ -36,19 +36,15 @@ public class Contact {
     private Long id;
 
     @NotBlank(message = "FIO must NOT be empty")
-    @NotEmpty(message = "FIO must NOT be empty")
-    @NotNull(message = "FIO must NOT be empty")
     @Column(name = "FIO", unique = true)
     private String FIO;
 
     @NotBlank(message = "Position must NOT be empty")
-    @NotEmpty(message = "Position must NOT be empty")
     @Length(message = "Position must be not more 50 digits", max = 50)
-    @NotNull(message = "Position must NOT be empty")
     @Column(name = "position")
     private String position;
 
-    @NotNull(message = "Phone must NOT be empty")
+
     @Column(name = "primary_phone ", unique = true)
     private int primaryPhone;
 

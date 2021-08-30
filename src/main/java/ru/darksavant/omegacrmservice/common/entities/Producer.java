@@ -43,9 +43,7 @@ public class Producer {
     private String designation;
 
     @NotBlank(message = "INN must NOT be empty")
-    @NotEmpty(message = "INN must NOT be empty")
     @Length(message = "INN must be 12 digits", min = 12, max = 12)
-    @NotNull(message = "INN must NOT be empty")
     @Column(name = "INN",unique = true)
     private long INN;
 
@@ -68,7 +66,6 @@ public class Producer {
             joinColumns = @JoinColumn(name = "producer_id"),
             inverseJoinColumns = @JoinColumn(name = "goods_id "))
     @ToString.Exclude
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Good> goods;
 
     @Override

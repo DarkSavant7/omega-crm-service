@@ -37,16 +37,12 @@ public class User {
     private Long id;
 
     @NotBlank(message = "Username must NOT be empty")
-    @NotEmpty(message = "Username must NOT be empty")
     @Length(message = "Must be in 4..255 digits", min = 3, max = 255)
-    @NotNull(message = "Username must NOT be empty")
     @Column(name = "username", unique = true)
     private String username;
 
     @NotBlank(message = "Password must NOT be empty")
-    @NotEmpty(message = "Password must NOT be empty")
     @Length(message = "Must be in 8..255 digits", min = 3, max = 255)
-    @NotNull(message = "Password must NOT be empty")
     @Column(name = "password")
     private String password;
 
@@ -54,7 +50,7 @@ public class User {
     @Email(message = "It must be email")
     private String email;
 
-    @NotNull (message = "Status must NOT be empty")
+    @NotBlank(message = "Status must NOT be empty")
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private UserStatus status;

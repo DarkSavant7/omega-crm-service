@@ -32,8 +32,6 @@ public class Category {
     @Column(name = "id")
     private Long id;
 
-    @NotNull(message = "Category name must NOT be empty")
-    @NotEmpty(message = "Category name must NOT be empty")
     @NotBlank(message = "Category name must NOT be empty")
     @Length(message = "Category name must be not more 50 digits",  max = 50)
     @Column(name = "category_name")

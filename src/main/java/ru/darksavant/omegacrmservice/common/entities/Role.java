@@ -29,7 +29,7 @@ public class Role {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
+    @NotNull(message = "Role name must NOT be empty")
     @Column(name = "name")
     private String name;
 

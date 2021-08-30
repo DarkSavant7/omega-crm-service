@@ -1,4 +1,4 @@
-create table users
+create table if not exists users
 (
     id         bigserial primary key,
     username   varchar(50) not null unique,
@@ -10,7 +10,7 @@ create table users
     updated_at timestamp            default current_timestamp
 );
 
-create table roles
+create table if not exists roles
 (
     id         bigserial primary key,
     name       varchar(50) not null unique,
@@ -18,13 +18,13 @@ create table roles
     updated_at timestamp default current_timestamp
 );
 
-CREATE TABLE users_roles
+CREATE TABLE if not exists users_roles
 (
     user_id bigint not null references users (id),
     role_id bigint not null references roles (id),
     primary key (user_id, role_id)
 );
-create table goods
+create table if not exists goods
 (
     id          bigserial primary key,
     vendor_code integer        not null unique,
@@ -36,24 +36,24 @@ create table goods
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
-create table category
+create table if not exists category
 (
     id            bigserial primary key,
     category_name varchar(50) not null unique
 );
 
-CREATE TABLE goods_category
+CREATE TABLE if not exists goods_category
 (
     goods_id    bigint not null references goods (id),
     category_id bigint not null references category (id),
     primary key (goods_id, category_id)
 );
-create table contacts
+create table if not exists contacts
 (
     id              bigserial primary key,
     FIO             varchar(255) not null unique,
     position        varchar(50),
-    primary_phone   integer      not null unique,
+    primary_phone   integer unique,
     mobile_phone    integer,
     work_phone      integer,
     primary_email   varchar(255) not null,
@@ -61,10 +61,10 @@ create table contacts
     created_at      timestamp default current_timestamp,
     updated_at      timestamp default current_timestamp
 );
-create table producers
+create table if not exists producers
 (
     id          bigserial primary key,
-    id_contact  bigint  not null references contacts (id),
+    id_contact  bigint not null references contacts (id),
     designation varchar(255) unique,
     INN         bigint not null unique,
     description varchar(255),
@@ -72,7 +72,7 @@ create table producers
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
-create table good_producer
+create table if not exists good_producer
 (
     goods_id    bigint not null references goods (id),
     producer_id bigint not null references producers (id),
