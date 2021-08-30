@@ -12,10 +12,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,32 +21,39 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "goods_category")
+@Table(name = "discount")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Category {
+public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_discount")
     private Long id;
 
-    @NotBlank(message = "Category name must NOT be empty")
-    @Length(message = "Category name must be not more 50 digits",  max = 50)
-    @Column(name = "category_name")
+    @Length(message = "Discount name must be not more 50 digits",  max = 50)
+    @NotBlank(message = "Discount name must NOT be empty")
+    @Column(name = "discount_name")
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "goods_category_cross",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "goods_id"))
-    @ToString.Exclude
-    private List<Good> goods;
+    @NotBlank(message = "Discount amount must NOT be empty")
+    @Column(name = "discount_amount")
+    private BigDecimal amount;
+
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Category role = (Category) o;
+        Discount role = (Discount) o;
 
         return Objects.equals(id, role.id);
     }

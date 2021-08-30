@@ -24,6 +24,7 @@ CREATE TABLE if not exists users_roles
     role_id bigint not null references roles (id),
     primary key (user_id, role_id)
 );
+
 create table if not exists goods
 (
     id          bigserial primary key,
@@ -36,17 +37,22 @@ create table if not exists goods
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
-create table if not exists category
+create table if not exists goods_category
 (
     id            bigserial primary key,
     category_name varchar(50) not null unique
 );
 
-CREATE TABLE if not exists goods_category
+CREATE TABLE if not exists goods_category_cross
 (
     goods_id    bigint not null references goods (id),
-    category_id bigint not null references category (id),
+    category_id bigint not null references goods_category (id),
     primary key (goods_id, category_id)
+);
+create table if not exists medical_card
+(
+    id_card     bigserial primary key,
+    description json
 );
 create table if not exists contacts
 (
@@ -59,7 +65,8 @@ create table if not exists contacts
     primary_email   varchar(255) not null,
     secondary_email varchar(255),
     created_at      timestamp default current_timestamp,
-    updated_at      timestamp default current_timestamp
+    updated_at      timestamp default current_timestamp,
+    medical         bigint references medical_card (id_card)
 );
 create table if not exists producers
 (
@@ -77,6 +84,46 @@ create table if not exists good_producer
     goods_id    bigint not null references goods (id),
     producer_id bigint not null references producers (id),
     primary key (goods_id, producer_id)
+);
+
+create table if not exists discount
+(
+    id_discount     bigserial   not null primary key,
+    discount_name   varchar(50) not null unique,
+    discount_amount decimal     not null,
+    created_at      timestamp default current_timestamp,
+    updated_at      timestamp default current_timestamp
+);
+
+create table if not exists payment_type
+(
+    id_payment_type bigserial not null primary key,
+    description     varchar(50),
+    created_at      timestamp default current_timestamp,
+    updated_at      timestamp default current_timestamp
+
+);
+create table if not exists sale_status
+(
+    id_sale_status bigserial not null primary key,
+    status_name    varchar(50),
+    created_at     timestamp default current_timestamp,
+    updated_at     timestamp default current_timestamp
+
+);
+create table if not exists sales
+(
+    id_sale         bigserial      not null primary key,
+    sale_date       timestamp,
+    total_amount    numeric(10, 2) not null,
+    discount_id     bigint references discount (id_discount),
+    payment_type_id bigint references payment_type (id_payment_type),
+    status          bigint references sale_status (id_sale_status),
+    saler           bigint         not null references users (id),
+    buyer           bigint         not null references contacts (id),
+    created_at      timestamp default current_timestamp,
+    updated_at      timestamp default current_timestamp
+
 );
 
 

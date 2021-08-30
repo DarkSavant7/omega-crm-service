@@ -45,7 +45,7 @@ public class Contact {
     private String position;
 
 
-    @Column(name = "primary_phone ", unique = true)
+    @Column(name = "primary_phone", unique = true)
     private int primaryPhone;
 
     @Column(name = "mobile_phone")
@@ -69,6 +69,10 @@ public class Contact {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToOne
+    @JoinColumn(name = "medical")
+    private MedicalCard medicalCard;
 
     @Override
     public boolean equals(Object o) {
