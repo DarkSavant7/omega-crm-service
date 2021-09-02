@@ -9,7 +9,6 @@ import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
@@ -17,6 +16,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -26,42 +26,52 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "users")
+@Table(name = "goods")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User {
+public class Good {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Username must NOT be empty")
-    @Length(message = "Must be in 4..255 digits", min = 3, max = 255)
-    @Column(name = "username", unique = true)
-    private String username;
+    @NotBlank(message = "Vendor code must NOT be empty")
+    @Column(name = "vendor_code", unique = true)
+    private int vendorCode;
 
-    @NotBlank(message = "Password must NOT be empty")
-    @Length(message = "Must be in 8..255 digits", min = 3, max = 255)
-    @Column(name = "password")
-    private String password;
+    @NotBlank(message = "Title must NOT be empty")
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "email")
-    @Email(message = "It must be email")
-    private String email;
+    @NotBlank(message = "Price must NOT be empty")
+    @Column(name = "price")
+    private BigDecimal price;
 
-    @NotBlank(message = "Status must NOT be empty")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private UserStatus status;
+    @Column(name = "url_preview")
+    private String urlPreview;
+
+    @Column(name="url_full")
+    private String urlFull;
+
+    @Column(name="description")
+    private String description;
 
     @ManyToMany
-    @JoinTable(name = "users_roles",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "goods_category",
+            joinColumns = @JoinColumn(name = "goods_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id "))
     @ToString.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Role> roles;
+    private List<Category> categories;
+
+    @ManyToMany
+    @JoinTable(name = "good_producer",
+            joinColumns = @JoinColumn(name = "goods_id"),
+            inverseJoinColumns = @JoinColumn(name = "producer_id "))
+    @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Producer> producers;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -75,7 +85,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
+        Good user = (Good) o;
 
         return Objects.equals(id, user.id);
     }

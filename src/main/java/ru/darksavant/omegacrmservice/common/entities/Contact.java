@@ -9,7 +9,6 @@ import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
@@ -26,42 +25,42 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "users")
+@Table(name = "contacts")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User {
+public class Contact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Username must NOT be empty")
-    @Length(message = "Must be in 4..255 digits", min = 3, max = 255)
-    @Column(name = "username", unique = true)
-    private String username;
+    @NotBlank(message = "FIO must NOT be empty")
+    @Column(name = "FIO", unique = true)
+    private String FIO;
 
-    @NotBlank(message = "Password must NOT be empty")
-    @Length(message = "Must be in 8..255 digits", min = 3, max = 255)
-    @Column(name = "password")
-    private String password;
+    @NotBlank(message = "Position must NOT be empty")
+    @Length(message = "Position must be not more 50 digits", max = 50)
+    @Column(name = "position")
+    private String position;
 
-    @Column(name = "email")
-    @Email(message = "It must be email")
-    private String email;
 
-    @NotBlank(message = "Status must NOT be empty")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private UserStatus status;
+    @Column(name = "primary_phone", unique = true)
+    private int primaryPhone;
 
-    @ManyToMany
-    @JoinTable(name = "users_roles",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @ToString.Exclude
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Role> roles;
+    @Column(name = "mobile_phone")
+    private int mobilePhone;
+
+    @Column(name = "work_phone")
+    private int workPhone;
+
+    @Column(name = "primary_email")
+    @NotNull(message = "Email must NOT be empty")
+    private String primaryEmail;
+
+    @Column(name = "secondary_email")
+    private String secondaryEmail;
+
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -71,11 +70,15 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @OneToOne
+    @JoinColumn(name = "medical")
+    private MedicalCard medicalCard;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
+        Contact user = (Contact) o;
 
         return Objects.equals(id, user.id);
     }
