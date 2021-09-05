@@ -6,12 +6,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -19,33 +17,28 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "sale_status")
+@Table(name = "calculation_items")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SaleStatus {
+public class CalculationItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_sale_status")
+    @Column(name = "id_calc_item")
     private Long id;
 
-    @Length(message = "Status name must be not more 50 digits",  max = 50)
-    @Column(name = "status_name")
-    private String name;
+    @OneToOne
+    @JoinColumn(name = "good_id")
+    private Good good;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
+    @NotBlank(message = "Quantity must NOT be empty")
+    @Column(name = "quantity")
+    private BigDecimal quantity;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SaleStatus role = (SaleStatus) o;
+        CalculationItems role = (CalculationItems) o;
 
         return Objects.equals(id, role.id);
     }

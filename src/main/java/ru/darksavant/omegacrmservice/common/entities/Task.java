@@ -8,11 +8,9 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -21,42 +19,46 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "contacts")
+@Table(name = "tasks")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Contact {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_task")
     private Long id;
 
-    @NotBlank(message = "FIO must NOT be empty")
-    @Column(name = "FIO", unique = true)
-    private String FIO;
+    @NotBlank(message = "Description of task must NOT be empty")
+    @Column(name = "description")
+    private String description;
 
-    @NotBlank(message = "Position must NOT be empty")
-    @Length(message = "Position must be not more 50 digits", max = 50)
-    @Column(name = "position")
-    private String position;
+    @Column(name = "context")
+    private String context;
 
+    @OneToOne
+    @NotBlank(message = "Producer of task must NOT be empty")
+    @JoinColumn(name = "producer")
+    private User producer;
 
-    @Column(name = "primary_phone", unique = true)
-    private int primaryPhone;
+    @OneToOne
+    @NotBlank(message = "Executor of task must NOT be empty")
+    @JoinColumn(name = "executor")
+    private User executor;
 
-    @Column(name = "mobile_phone")
-    private int mobilePhone;
+    @Column(name = "started_at")
+    private LocalDateTime start;
 
-    @Column(name = "work_phone")
-    private int workPhone;
+    @Column(name = "finished_at")
+    private LocalDateTime end;
 
-    @Column(name = "primary_email")
-    @NotNull(message = "Email must NOT be empty")
-    private String primaryEmail;
+    @OneToOne
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
 
-    @Column(name = "secondary_email")
-    private String secondaryEmail;
-
+    @OneToOne
+    @JoinColumn(name = "status_id")
+    private TaskStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -66,15 +68,11 @@ public class Contact {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToOne
-    @JoinColumn(name = "medical")
-    private MedicalCard medicalCard;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Contact user = (Contact) o;
+        Task user = (Task) o;
 
         return Objects.equals(id, user.id);
     }

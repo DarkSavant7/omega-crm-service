@@ -5,13 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,18 +19,24 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "sale_status")
+@Table(name = "calculation")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SaleStatus {
+public class Calculation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_sale_status")
+    @Column(name = "id_calculation")
     private Long id;
 
-    @Length(message = "Status name must be not more 50 digits",  max = 50)
-    @Column(name = "status_name")
-    private String name;
+   @OneToOne
+   @JoinColumn(name = "good_id")
+   private Good good;
+
+   @OneToMany
+   @JoinColumn(name ="calc_id" )
+   @ToString.Exclude
+   @LazyCollection(LazyCollectionOption.FALSE)
+   private List<CalculationItems> items;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -40,12 +46,11 @@ public class SaleStatus {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SaleStatus role = (SaleStatus) o;
+        Calculation role = (Calculation) o;
 
         return Objects.equals(id, role.id);
     }

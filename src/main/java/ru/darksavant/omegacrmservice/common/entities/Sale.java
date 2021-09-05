@@ -69,6 +69,12 @@ public class Sale {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @OneToMany
+    @JoinColumn(name ="sale_id" )
+    @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<SalesItems> items;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

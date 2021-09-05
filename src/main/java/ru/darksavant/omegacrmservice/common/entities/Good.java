@@ -6,16 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.*;
-import org.hibernate.validator.constraints.Length;
-import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,20 +53,26 @@ public class Good {
     private String description;
 
     @ManyToMany
-    @JoinTable(name = "goods_category",
+    @JoinTable(name = "goods_category_cross",
             joinColumns = @JoinColumn(name = "goods_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id "))
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     @ToString.Exclude
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Category> categories;
 
     @ManyToMany
-    @JoinTable(name = "good_producer",
+    @JoinTable(name = "good_producer_cross",
             joinColumns = @JoinColumn(name = "goods_id"),
-            inverseJoinColumns = @JoinColumn(name = "producer_id "))
+            inverseJoinColumns = @JoinColumn(name = "producer_id"))
     @ToString.Exclude
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Producer> producers;
+
+    @ManyToMany
+    @JoinTable(name = "warehouses_goods",
+            joinColumns = @JoinColumn(name = "good_id"),
+            inverseJoinColumns = @JoinColumn(name = "warehouse_id"))
+    @ToString.Exclude
+    private List<Warehouse> warehouses;
 
     @CreationTimestamp
     @Column(name = "created_at")

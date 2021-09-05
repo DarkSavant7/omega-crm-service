@@ -6,12 +6,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -19,35 +17,37 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "sale_status")
+@Table(name = "warehouses")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class SaleStatus {
+public class Warehouse {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_sale_status")
+    @Column(name = "id_warehouse")
     private Long id;
 
-    @Length(message = "Status name must be not more 50 digits",  max = 50)
-    @Column(name = "status_name")
-    private String name;
+    @Column(name = "description")
+    @Length(message = "Warehouse description must be not more 50 digits", max = 50)
+    private String description;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @ManyToMany
+    @JoinTable(name = "warehouses_goods",
+            joinColumns = @JoinColumn(name = "warehouse_id"),
+            inverseJoinColumns = @JoinColumn(name = "good_id"))
+    @ToString.Exclude
+    private List<Good> goodList;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SaleStatus role = (SaleStatus) o;
+        Warehouse user = (Warehouse) o;
 
-        return Objects.equals(id, role.id);
+        return Objects.equals(id, user.id);
     }
 
 }
