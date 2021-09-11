@@ -8,11 +8,9 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -21,42 +19,33 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "contacts")
+@Table(name = "time_slots")
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Contact {
+public class TimeSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_time_slot")
     private Long id;
 
-    @NotBlank(message = "FIO must NOT be empty")
-    @Column(name = "FIO", unique = true)
-    private String FIO;
+    @NotBlank(message = "Start time must NOT be empty")
+    @Column(name = "started_at")
+    private LocalDateTime start;
 
-    @NotBlank(message = "Position must NOT be empty")
-    @Length(message = "Position must be not more 50 digits", max = 50)
-    @Column(name = "position")
-    private String position;
+    @NotBlank(message = "End time must NOT be empty")
+    @Column(name = "finished_at")
+    private LocalDateTime end;
 
+    @OneToOne
+    @NotBlank(message = "Job must NOT be empty")
+    @JoinColumn(name = "job_id")
+    private Job job;
 
-    @Column(name = "primary_phone", unique = true)
-    private int primaryPhone;
-
-    @Column(name = "mobile_phone")
-    private int mobilePhone;
-
-    @Column(name = "work_phone")
-    private int workPhone;
-
-    @Column(name = "primary_email")
-    @NotNull(message = "Email must NOT be empty")
-    private String primaryEmail;
-
-    @Column(name = "secondary_email")
-    private String secondaryEmail;
-
+    @OneToOne
+    @NotBlank(message = "Time slot status must NOT be empty")
+    @JoinColumn(name = "status_id")
+    private Status status;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -66,15 +55,11 @@ public class Contact {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToOne
-    @JoinColumn(name = "medical")
-    private MedicalCard medicalCard;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Contact user = (Contact) o;
+        TimeSlot user = (TimeSlot) o;
 
         return Objects.equals(id, user.id);
     }

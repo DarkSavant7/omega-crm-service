@@ -79,7 +79,7 @@ create table if not exists producers
     created_at  timestamp default current_timestamp,
     updated_at  timestamp default current_timestamp
 );
-create table if not exists good_producer
+create table if not exists good_producer_cross
 (
     goods_id    bigint not null references goods (id),
     producer_id bigint not null references producers (id),
@@ -125,6 +125,124 @@ create table if not exists sales
     updated_at      timestamp default current_timestamp
 
 );
+create table if not exists sales_items
+(
+    id_sale_detail bigserial      not null primary key,
+    sale_id        bigint         not null references sales (id_sale),
+    good_id        bigint         not null references goods (id),
+    price          numeric(10, 2) not null,
+    quantity       numeric(10, 2) not null
+
+);
+create table if not exists calculation
+(
+    id_calculation bigserial not null primary key,
+    good_id        bigint references goods (id),
+    created_at     timestamp default current_timestamp,
+    updated_at     timestamp default current_timestamp
+);
+create table if not exists calculation_items
+(
+    id_calc_item bigserial      not null primary key,
+    good_id      bigint         not null references goods (id),
+    quantity     numeric(10, 2) not null,
+    calc_id      bigint         not null references calculation (id_calculation)
+);
+
+create table if not exists status
+(
+    id_status bigserial    not null primary key,
+    title     varchar(255) not null
+);
+create table if not exists work_place
+(
+    id_work_place bigserial    not null primary key,
+    title         varchar(255) not null
+);
+
+create table if not exists service_category
+(
+    id_service_category bigserial    not null primary key,
+    name                varchar(255) not null
+);
+create table if not exists services
+(
+    id_service  bigserial not null primary key,
+    description varchar(255),
+    title       varchar(255) unique,
+    price       numeric(10, 2),
+    created_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
+);
+create table if not exists service_category_service
+(
+    service_category bigint not null references services (id_service),
+    category_service bigint not null references service_category (id_service_category),
+    primary key (service_category, category_service)
+);
+
+create table if not exists jobs
+(
+    id_job        bigserial not null primary key,
+    service_id    bigint    not null references services (id_service),
+    user_id       bigint    not null references users (id),
+    contact_id    bigint    not null references contacts (id),
+    work_place_id bigint    not null references work_place (id_work_place),
+    created_at    timestamp default current_timestamp,
+    updated_at    timestamp default current_timestamp
+);
+
+create table if not exists time_slots
+(
+    id_time_slot bigint    not null primary key,
+    started_at   timestamp not null,
+    finished_at  timestamp not null,
+    job_id       bigint    not null references jobs (id_job),
+    status_id    bigint    not null references status (id_status),
+    created_at   timestamp default current_timestamp,
+    updated_at   timestamp default current_timestamp
+);
+
+create table if not exists task_status
+(
+    id_status   bigserial    not null primary key,
+    description varchar(255) not null unique
+);
+
+create table if not exists priority
+(
+    id_priority bigserial    not null primary key,
+    description varchar(255) not null unique
+);
+
+create table if not exists tasks
+(
+    id_task     bigserial    not null primary key,
+    description varchar(255) not null,
+    context     json,
+    producer    bigint       not null references users (id),
+    executor    bigint       not null references users (id),
+    started_at  timestamp,
+    finished_at timestamp,
+    priority_id bigint references priority (id_priority),
+    status_id   bigint references task_status (id_status),
+    created_at  timestamp default current_timestamp,
+    updated_at  timestamp default current_timestamp
+
+);
+
+create table if not exists warehouses(
+    id_warehouse bigserial not null primary key ,
+    description varchar(255) not null
+
+);
+
+create table if not exists warehouses_goods(
+    warehouse_id bigint not null references warehouses(id_warehouse),
+    good_id bigint not null references goods(id),
+    quantity     numeric(10, 2) not null
+);
+
 
 
 
