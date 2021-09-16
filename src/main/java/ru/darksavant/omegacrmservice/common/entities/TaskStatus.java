@@ -27,7 +27,7 @@ public class TaskStatus {
     @Column(name = "id_status")
     private Long id;
 
-    @Length(message = "Description of status must be not more 255 digits",  max = 50)
+    @Length(message = "Description of status must be not more 50 digits",  max = 50)
     @NotBlank(message = "Description of status category  must NOT be empty")
     @Column(name = "description")
     private String description;

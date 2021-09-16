@@ -28,15 +28,15 @@ public class Calculation {
     @Column(name = "id_calculation")
     private Long id;
 
-   @OneToOne
-   @JoinColumn(name = "good_id")
-   private Good good;
+    @OneToOne
+    @JoinColumn(name = "good_id")
+    private Good good;
 
-   @OneToMany
-   @JoinColumn(name ="calc_id" )
-   @ToString.Exclude
-   @LazyCollection(LazyCollectionOption.FALSE)
-   private List<CalculationItems> items;
+    @OneToMany
+    @JoinColumn(name = "calc_id")
+    @ToString.Exclude
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<CalculationItems> items;
 
     @CreationTimestamp
     @Column(name = "created_at")
