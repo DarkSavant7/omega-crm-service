@@ -16,18 +16,18 @@ public class StatusService {
     private final StatusRepository statusRepository;
 
     public Status findByName(String name) {
-        return statusRepository.findByTitle(name).orElseThrow(() -> new ResourceNotFoundException("Discount not found"));
+        return statusRepository.findByTitle(name).orElseThrow(() -> new ResourceNotFoundException("Status not found"));
     }
 
     public Status save(Status d) {
         return statusRepository.save(d);
     }
 
-    public void deleteDiscount(Status d) {
+    public void delete(Status d) {
         statusRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id){
+    public void deleteById(Long id){
         statusRepository.deleteById(id);
     }
 

@@ -21,11 +21,11 @@ public class PaymentTypeService {
         return paymentTypeRepository.save(d);
     }
 
-    public void deleteDiscount(PaymentType d) {
+    public void delete(PaymentType d) {
         paymentTypeRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id) {
+    public void deleteById(Long id) {
         paymentTypeRepository.deleteById(id);
     }
 

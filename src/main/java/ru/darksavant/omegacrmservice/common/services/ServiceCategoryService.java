@@ -20,11 +20,11 @@ public class ServiceCategoryService {
         return serviceCategoryRepository.save(d);
     }
 
-    public void deleteDiscount(ServiceCategory d) {
+    public void delete(ServiceCategory d) {
         serviceCategoryRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id) {
+    public void deleteById(Long id) {
         serviceCategoryRepository.deleteById(id);
     }
 

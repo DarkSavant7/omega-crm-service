@@ -21,11 +21,11 @@ public class WorkPlaceService {
         return workPlaceRepository.save(d);
     }
 
-    public void deleteDiscount(WorkPlace d) {
+    public void delete(WorkPlace d) {
         workPlaceRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id) {
+    public void deleteById(Long id) {
         workPlaceRepository.deleteById(id);
     }
 

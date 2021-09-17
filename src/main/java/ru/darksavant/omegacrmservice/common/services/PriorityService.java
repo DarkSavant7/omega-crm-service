@@ -21,11 +21,11 @@ public class PriorityService {
         return priorityRepository.save(d);
     }
 
-    public void deleteDiscount(Priority d) {
+    public void delete(Priority d) {
         priorityRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id){
+    public void deleteById(Long id){
         priorityRepository.deleteById(id);
     }
 

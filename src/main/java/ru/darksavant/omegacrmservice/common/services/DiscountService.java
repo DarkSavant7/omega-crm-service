@@ -26,11 +26,11 @@ public class DiscountService {
         return discountRepository.save(d);
     }
 
-    public void deleteDiscount(Discount d) {
+    public void delete(Discount d) {
         discountRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id){
+    public void deleteById(Long id){
         discountRepository.deleteById(id);
     }
 

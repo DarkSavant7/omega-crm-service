@@ -21,11 +21,11 @@ public class SaleStatusService {
         return saleStatusRepository.save(d);
     }
 
-    public void deleteDiscount(SaleStatus d) {
+    public void delete(SaleStatus d) {
         saleStatusRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id) {
+    public void deleteById(Long id) {
         saleStatusRepository.deleteById(id);
     }
 

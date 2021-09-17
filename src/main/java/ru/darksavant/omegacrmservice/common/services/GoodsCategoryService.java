@@ -21,11 +21,11 @@ public class GoodsCategoryService {
         return categoryRepository.save(d);
     }
 
-    public void deleteDiscount(Category d) {
+    public void delete(Category d) {
         categoryRepository.delete(d);
     }
 
-    public void deleteDiscountById(Long id){
+    public void deleteById(Long id){
         categoryRepository.deleteById(id);
     }
 
