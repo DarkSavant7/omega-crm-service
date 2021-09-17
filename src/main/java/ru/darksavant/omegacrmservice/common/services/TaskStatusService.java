@@ -15,18 +15,16 @@ public class TaskStatusService {
          return taskStatusRepository.findByDescription(name).orElseThrow(()-> new ResourceNotFoundException("Task status not found"));
     }
 
-    public boolean save (TaskStatus status){
-        taskStatusRepository.save(status);
-        return findByName(status.getDescription())!=null;
+    public TaskStatus save (TaskStatus status){
+        return taskStatusRepository.save(status);
     }
 
-    public boolean delete (TaskStatus status){
-        try {
+    public void delete (TaskStatus status){
             taskStatusRepository.delete(status);
-            return true;
-        } catch (ResourceNotFoundException e){
-            return false;
-        }
+    }
+
+    public void deleteById(Long id){
+        taskStatusRepository.deleteById(id);
     }
 
 

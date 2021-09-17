@@ -15,19 +15,16 @@ public class DiscountService {
         return discountRepository.findByName(name).orElseThrow(() -> new ResourceNotFoundException("Discount not found"));
     }
 
-    public boolean save(Discount d) {
-        discountRepository.save(d);
-        return findByName(d.getName()) != null;
+    public Discount save(Discount d) {
+        return discountRepository.save(d);
     }
 
-    public boolean deleteDiscount(Discount d) {
-        discountRepository.delete(d);
-        try {
-            findByName(d.getName());
-            return false;
-        } catch (ResourceNotFoundException e) {
-            return true;
-        }
+    public void deleteDiscount(Discount d) {
+        discountRepository.delete(d);        
+    }
+
+    public void deleteDiscountById(Long id){
+        discountRepository.deleteById(id);
     }
 
 

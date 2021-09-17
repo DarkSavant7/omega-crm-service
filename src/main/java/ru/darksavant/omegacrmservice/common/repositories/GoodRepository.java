@@ -12,5 +12,4 @@ public interface GoodRepository extends JpaRepository<Good,Long> {
 
     Optional<Good> findGoodByTitle(String title);
 
-
 }
