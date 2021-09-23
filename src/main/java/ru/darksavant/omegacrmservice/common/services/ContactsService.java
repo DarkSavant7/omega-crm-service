@@ -11,37 +11,37 @@ import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
 public class ContactsService {
     private final ContactRepository repository;
 
-    private Contact findByFIO(String fio) {
+    public Contact findByFIO(String fio) {
         return repository.findByFIO(fio).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
 
-    private Contact findByPosition(String pos) {
+    public Contact findByPosition(String pos) {
         return repository.findContactByPosition(pos).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
 
-    private Contact findByPrimaryPhone(int phone) {
+    public Contact findByPrimaryPhone(int phone) {
         return repository.findByPrimaryPhone(phone).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
 
-    private Contact findByPrimaryEmail(String email) {
+    public Contact findByPrimaryEmail(String email) {
         return repository.findByPrimaryEmail(email).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
 
-    private Contact findByMobilePhone(int phone) {
+    public Contact findByMobilePhone(int phone) {
         return repository.findByMobilePhone(phone).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
 
-    private Contact findByWorkPhone(int phone) {
+    public Contact findByWorkPhone(int phone) {
         return repository.findByWorkPhone(phone).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
 
-    private Contact findBySecondaryEmail(String email) {
+    public Contact findBySecondaryEmail(String email) {
         return repository.findBySecondaryEmail(email).orElseThrow(() -> new ResourceNotFoundException("Contact not found"));
     }
 
