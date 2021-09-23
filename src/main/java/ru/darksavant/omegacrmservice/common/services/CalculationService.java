@@ -24,9 +24,6 @@ public class CalculationService {
     public Calculation findByGood(Good good){
         return repository.findByGood(good).orElseThrow(() -> new ResourceNotFoundException("Calculation not found"));
     }
-    public Calculation findByItems(List<CalculationItems> items){
-        return repository.findByItems(items).orElseThrow(() -> new ResourceNotFoundException("Calculation Items not found"));
-    }
 
     public Calculation save(Calculation item) {
         return repository.save(item);

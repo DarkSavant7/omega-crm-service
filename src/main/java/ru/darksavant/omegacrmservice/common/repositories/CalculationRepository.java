@@ -13,5 +13,5 @@ import java.util.Optional;
 @Repository
 public interface CalculationRepository extends JpaRepository<Calculation,Long> {
     Optional<Calculation> findByGood(Good good);
-    Optional<Calculation> findByItems(List<CalculationItems> items);
+
 }
