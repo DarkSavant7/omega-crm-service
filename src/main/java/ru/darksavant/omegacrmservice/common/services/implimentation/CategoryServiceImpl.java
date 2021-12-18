@@ -1,18 +1,15 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.darksavant.omegacrmservice.common.entities.Category;
-import ru.darksavant.omegacrmservice.common.entities.Discount;
 import ru.darksavant.omegacrmservice.common.repositories.CategoryRepository;
-import ru.darksavant.omegacrmservice.common.repositories.DiscountRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.CategoryService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
-
-import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
-public class CategoryService {
+public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
 
     public Category findById(Long id){

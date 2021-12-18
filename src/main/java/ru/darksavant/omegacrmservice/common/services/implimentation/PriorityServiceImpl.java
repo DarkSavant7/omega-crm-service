@@ -1,16 +1,15 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.darksavant.omegacrmservice.common.entities.Discount;
 import ru.darksavant.omegacrmservice.common.entities.Priority;
-import ru.darksavant.omegacrmservice.common.repositories.DiscountRepository;
 import ru.darksavant.omegacrmservice.common.repositories.PriorityRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.PriorityService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
 
 @Service
 @AllArgsConstructor
-public class PriorityService {
+public class PriorityServiceImpl implements PriorityService {
     private final PriorityRepository priorityRepository;
 
     public Priority findByDescription(String name) {
@@ -25,7 +24,7 @@ public class PriorityService {
         priorityRepository.delete(d);
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         priorityRepository.deleteById(id);
     }
 

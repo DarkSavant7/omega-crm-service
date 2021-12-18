@@ -1,4 +1,4 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +11,7 @@ import ru.darksavant.omegacrmservice.common.entities.Role;
 import ru.darksavant.omegacrmservice.common.entities.User;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 import ru.darksavant.omegacrmservice.common.repositories.UserRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.UserService;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
 
     public User blockUser(Long userId) {

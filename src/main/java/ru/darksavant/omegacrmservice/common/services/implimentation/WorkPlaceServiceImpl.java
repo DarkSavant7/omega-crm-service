@@ -1,16 +1,15 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.darksavant.omegacrmservice.common.entities.SaleStatus;
 import ru.darksavant.omegacrmservice.common.entities.WorkPlace;
-import ru.darksavant.omegacrmservice.common.repositories.SaleStatusRepository;
 import ru.darksavant.omegacrmservice.common.repositories.WorkPlaceRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.WorkPlaceService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
 
 @Service
 @AllArgsConstructor
-public class WorkPlaceService {
+public class WorkPlaceServiceImpl implements WorkPlaceService {
     private final WorkPlaceRepository workPlaceRepository;
 
     public WorkPlace findByTitle(String name) {

@@ -1,20 +1,16 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.darksavant.omegacrmservice.common.entities.Calculation;
 import ru.darksavant.omegacrmservice.common.entities.Contact;
-import ru.darksavant.omegacrmservice.common.entities.Good;
 import ru.darksavant.omegacrmservice.common.entities.Producer;
-import ru.darksavant.omegacrmservice.common.repositories.CalculationRepository;
 import ru.darksavant.omegacrmservice.common.repositories.ProducerRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.ProducerService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
-
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ProducerService {
+public class ProducerServiceImpl implements ProducerService {
     private final ProducerRepository  repository;
 
     public Producer findByID(Long id) {

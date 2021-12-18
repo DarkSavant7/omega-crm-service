@@ -1,17 +1,16 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.darksavant.omegacrmservice.common.entities.PaymentType;
-import ru.darksavant.omegacrmservice.common.repositories.PaymentTypeRepository;
 import ru.darksavant.omegacrmservice.common.repositories.ServiceRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.ServiceService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
 
 import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
-public class ServiceService {
+public class ServiceServiceImpl implements ServiceService {
     private final ServiceRepository serviceRepository;
 
     public ru.darksavant.omegacrmservice.common.entities.Service findByDescription(String name) {
