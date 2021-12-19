@@ -1,18 +1,15 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.darksavant.omegacrmservice.common.entities.Discount;
 import ru.darksavant.omegacrmservice.common.entities.Role;
-import ru.darksavant.omegacrmservice.common.repositories.DiscountRepository;
 import ru.darksavant.omegacrmservice.common.repositories.RoleRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.RoleService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
-
-import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
-public class RoleService {
+public class RoleServiceImpl implements RoleService {
     private final RoleRepository repository;
 
     public Role findById(Long id) {

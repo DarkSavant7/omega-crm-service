@@ -1,20 +1,16 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.darksavant.omegacrmservice.common.entities.Calculation;
-import ru.darksavant.omegacrmservice.common.entities.CalculationItems;
 import ru.darksavant.omegacrmservice.common.entities.Good;
-import ru.darksavant.omegacrmservice.common.repositories.CalculationItemsRepository;
 import ru.darksavant.omegacrmservice.common.repositories.CalculationRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.CalculationService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CalculationService {
+public class CalculationServiceImpl implements CalculationService {
     private final CalculationRepository repository;
 
     public Calculation findByID(Long id) {

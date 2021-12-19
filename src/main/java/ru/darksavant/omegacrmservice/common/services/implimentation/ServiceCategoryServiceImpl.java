@@ -1,15 +1,15 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.darksavant.omegacrmservice.common.entities.ServiceCategory;
 import ru.darksavant.omegacrmservice.common.repositories.ServiceCategoryRepository;
-import ru.darksavant.omegacrmservice.common.repositories.ServiceRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.ServiceCategoryService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
 
 @Service
 @AllArgsConstructor
-public class ServiceCategoryService {
+public class ServiceCategoryServiceImpl implements ServiceCategoryService {
     private final ServiceCategoryRepository serviceCategoryRepository;
 
     public ServiceCategory findByDescription(String name) {

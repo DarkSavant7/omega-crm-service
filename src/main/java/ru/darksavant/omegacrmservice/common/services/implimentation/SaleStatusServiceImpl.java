@@ -1,16 +1,15 @@
-package ru.darksavant.omegacrmservice.common.services;
+package ru.darksavant.omegacrmservice.common.services.implimentation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.darksavant.omegacrmservice.common.entities.Priority;
 import ru.darksavant.omegacrmservice.common.entities.SaleStatus;
-import ru.darksavant.omegacrmservice.common.repositories.PriorityRepository;
 import ru.darksavant.omegacrmservice.common.repositories.SaleStatusRepository;
+import ru.darksavant.omegacrmservice.common.services.interfaces.SaleStatusService;
 import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
 
 @Service
 @AllArgsConstructor
-public class SaleStatusService {
+public class SaleStatusServiceImpl implements SaleStatusService {
     private final SaleStatusRepository saleStatusRepository;
 
     public SaleStatus findByDescription(String name) {
