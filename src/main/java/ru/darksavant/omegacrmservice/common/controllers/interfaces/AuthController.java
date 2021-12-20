@@ -9,8 +9,9 @@ import ru.darksavant.omegacrmservice.common.entities.dto.JwtResponse;
 
 
 public interface AuthController {
+
     @PostMapping()
-    @Operation(summary =  "Creates token for user.")
+
     ResponseEntity<JwtResponse> createToken(@RequestBody JwtRequest jwtRequest);
 
 }

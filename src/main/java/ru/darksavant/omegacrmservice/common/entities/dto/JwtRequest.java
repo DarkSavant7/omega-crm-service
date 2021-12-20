@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "THis is your request to log in")
 @NoArgsConstructor
 public class JwtRequest {
-    @Schema(description = "Имя пользователя или почта или телефон", required = true)
+    @Schema(description = "Имя пользователя", required = true)
     private String username;
 
     @Schema(description = "Users password ", required = true)
