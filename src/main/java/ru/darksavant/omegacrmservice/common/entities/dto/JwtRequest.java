@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Schema(description = "THis is your request to log in")
+@Schema(description = "Запрос на получение токена")
 @NoArgsConstructor
 public class JwtRequest {
     @Schema(description = "Имя пользователя", required = true)
     private String username;
 
-    @Schema(description = "Users password ", required = true)
+    @Schema(description = "Пользовательский пароль", required = true)
     private String password;
 }

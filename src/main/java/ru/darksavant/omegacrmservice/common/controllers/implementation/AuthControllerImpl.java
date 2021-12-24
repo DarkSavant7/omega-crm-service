@@ -1,14 +1,11 @@
 package ru.darksavant.omegacrmservice.common.controllers.implementation;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +14,7 @@ import ru.darksavant.omegacrmservice.common.controllers.interfaces.AuthControlle
 import ru.darksavant.omegacrmservice.common.entities.User;
 import ru.darksavant.omegacrmservice.common.entities.dto.JwtRequest;
 import ru.darksavant.omegacrmservice.common.entities.dto.JwtResponse;
+import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 import ru.darksavant.omegacrmservice.common.services.interfaces.UserService;
 import ru.darksavant.omegacrmservice.errors.BadRequestException;
@@ -24,15 +22,13 @@ import ru.darksavant.omegacrmservice.errors.BadRequestException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Контроллер для авторизации")
-@RequestMapping("/api/v1/auth")
-public class AuthControllerImpl {
+public class AuthControllerImpl implements AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
 
-
-    public ResponseEntity<JwtResponse> createToken(@RequestBody JwtRequest jwtRequest){
+    @Override
+    public ResponseEntity<JwtResponse> createToken(@RequestBody JwtRequest jwtRequest) {
         log.info("User trying to log in with login: {}", jwtRequest.getUsername());
         User user = userService.findByUsername(jwtRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),
@@ -46,5 +42,11 @@ public class AuthControllerImpl {
         log.info("Success logged user {} with roles: {}", user.getUsername(), user.getRoles());
         return ResponseEntity.ok(new JwtResponse(token));
     }
+
+    @Override
+    public ResponseEntity<UserDTO> createUser(String userName, String password,String role) {
+        return userService.createUser(userName, password,role);
+    }
+
 
 }
