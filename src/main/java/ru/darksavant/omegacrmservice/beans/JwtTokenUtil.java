@@ -30,8 +30,7 @@ public class JwtTokenUtil {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         claims.put("roles", roles);
-        claims.put("full_name", "Some name"); //TODO make name in profile and get out of there
-
+        claims.put("full_name", user.getUsername());
         Date issuedDate = new Date();
         Date expired = new Date(issuedDate.getTime() + 72 * 60 * 60 * 1000); //72 hours
 
@@ -51,10 +50,8 @@ public class JwtTokenUtil {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         claims.put("roles", roles);
-
         Date issuedDate = new Date();
         Date expired = new Date(issuedDate.getTime() + 72 * 60 * 60 * 1000); //72 hours
-
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())

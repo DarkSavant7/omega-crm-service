@@ -1,14 +1,12 @@
-package ru.darksavant.omegacrmservice.common.services.interfaces;
+package ru.darksavant.omegacrmservice.common.controllers.interfaces;
 
 import ru.darksavant.omegacrmservice.common.entities.Role;
 
-import java.util.Optional;
-
-public interface RoleService {
+public interface RoleController {
 
     Role findById(Long id);
 
-    Optional<Role> findByName(String name);
+    Role findByName(String name);
 
     Role save(Role d);
 

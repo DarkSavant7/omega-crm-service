@@ -5,7 +5,7 @@ create table if not exists users
     password   varchar(80) not null,
     email      varchar(50) unique,
     status     varchar(10) not null default 'ACTIVE'
-        check (status in ('ACTIVE', 'BLOCKED', 'DELETED')),
+        check (status in ('ACTIVE', 'CREATED','BLOCKED', 'DELETED')),
     created_at timestamp            default current_timestamp,
     updated_at timestamp            default current_timestamp
 );
