@@ -22,9 +22,9 @@ import ru.darksavant.omegacrmservice.common.repositories.UserRepository;
 import ru.darksavant.omegacrmservice.common.services.interfaces.RoleService;
 import ru.darksavant.omegacrmservice.common.services.interfaces.UserService;
 import ru.darksavant.omegacrmservice.errors.BadRequestException;
+import ru.darksavant.omegacrmservice.errors.ChangePasswordException;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (findByUsername(userName).isPresent())
             throw new BadRequestException("User with name " + userName + " already exist");
         if (roleService.findByName(role).isEmpty())
-            throw new BadRequestException("User role "+ role+" not found");
+            throw new BadRequestException("User role " + role + " not found");
 
         User newUser = new User();
         newUser.setUsername(userName);
@@ -102,6 +102,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public Page<UserDTO> findAll(Specification<User> specification, Integer page, Integer pageSize) {
-        return userRepository.findAll(specification, PageRequest.of(page-1,pageSize)).map(UserDTO::new);
+        return userRepository.findAll(specification, PageRequest.of(page - 1, pageSize)).map(UserDTO::new);
+    }
+
+    @Override
+    public UserDTO changePassword(String name, String oldPassword, String newPassword) {
+        User user = userRepository.findByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (user.getPassword().equals(passwordEncoder.encode(oldPassword))) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            user = userRepository.findByUsername(name).get();
+        } else {
+            throw new ChangePasswordException("Password do not mach.");
+        }
+        return new UserDTO(user);
     }
 }

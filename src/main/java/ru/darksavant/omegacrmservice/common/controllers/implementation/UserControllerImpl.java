@@ -21,7 +21,7 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public ResponseEntity<UserDTO> changePassword(Principal principal, String oldPassword, String newPassword) {
-        return null;
+        return ResponseEntity.ok(userService.changePassword(principal.getName(),oldPassword,newPassword));
     }
 
     @Override

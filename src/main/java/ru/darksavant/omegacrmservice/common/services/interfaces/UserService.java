@@ -28,4 +28,6 @@ public interface UserService {
     List<User> findAllByIds(Collection<Long> ids);
 
     Page<UserDTO> findAll(Specification<User> build, Integer page, Integer pageSize);
+
+    UserDTO changePassword(String name, String oldPassword, String newPassword);
 }
