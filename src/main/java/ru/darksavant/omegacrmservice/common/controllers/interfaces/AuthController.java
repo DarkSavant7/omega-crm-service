@@ -20,7 +20,7 @@ import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
 @RequestMapping("/api/v1/auth")
 public interface AuthController {
 
-    @PostMapping("/get_token")
+    @PostMapping("/login")
     @Operation(summary = "Получение токена авторизации")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Создан токен авторизации",

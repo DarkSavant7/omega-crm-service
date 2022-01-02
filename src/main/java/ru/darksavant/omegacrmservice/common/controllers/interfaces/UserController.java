@@ -12,7 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import ru.darksavant.omegacrmservice.common.entities.dto.GoodDTO;
 import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
+import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 
 import java.security.Principal;
 
@@ -32,7 +34,7 @@ public interface UserController {
                                            @Parameter(description = "Новый пароль") @RequestParam(name = "newPassword") String newPassword);
 
     @GetMapping("/get_user")
-    @Operation(summary = "Найти пользователя по имени")
+    @Operation(summary = "Найти пользователя по имени, почте или id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Пользователь успешно найден в системе",
                     content = {@Content(mediaType = "application/json",
@@ -41,7 +43,16 @@ public interface UserController {
                                            @Parameter(hidden = true) @RequestParam(name = "page_size", defaultValue = "10") Integer pageSize,
                                            @Parameter(description = "Имя пользователя") @RequestParam(required = false, name = "name") @Nullable String userName,
                                            @Parameter(description = "Email пользователя") @RequestParam(required = false, name = "email") @Nullable String email,
-                                           @Parameter(description = "Id пользователя") @RequestParam(required = false, name = "id") Long id);
+                                           @Parameter(description = "Id пользователя") @RequestParam(required = false, name = "id") @Nullable Long id);
 
+    @PutMapping("/update")
+    @Operation(summary = "Обновление информации о пользователе")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Информация обновлена успешно",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserDTO.class))})})
+    ResponseEntity<UserDTO> update(@Parameter(description = "Имя пользователя") @RequestParam(required = false, name = "username") @Nullable String username,
+                                   @Parameter(description = "Статус") @RequestParam(required = false, name = "status") @Nullable UserStatus status,
+                                   @Parameter(description = "Роль") @RequestParam(required = false, name = "role") @Nullable String role );
 
 }

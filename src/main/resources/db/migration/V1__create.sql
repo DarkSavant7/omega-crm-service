@@ -28,7 +28,7 @@ CREATE TABLE if not exists users_roles
 create table if not exists goods
 (
     id          bigserial primary key,
-    vendor_code integer        not null unique,
+    vendor_code integer        unique,
     title       varchar(255)   not null,
     price       numeric(10, 2) not null,
     url_preview varchar(255),

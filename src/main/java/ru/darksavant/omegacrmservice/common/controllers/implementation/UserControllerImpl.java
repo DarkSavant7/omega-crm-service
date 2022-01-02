@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.darksavant.omegacrmservice.common.controllers.interfaces.UserController;
 import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
+import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 import ru.darksavant.omegacrmservice.common.repositories.specifications.UserSpecification;
 import ru.darksavant.omegacrmservice.common.services.interfaces.UserService;
 
@@ -30,5 +31,10 @@ public class UserControllerImpl implements UserController {
             page = 1;
         }
         return ResponseEntity.ok(userService.findAll(UserSpecification.build(userName, email, id), page, pageSize));
+    }
+
+    @Override
+    public ResponseEntity<UserDTO> update(String username, UserStatus status, String role) {
+        return null;
     }
 }
