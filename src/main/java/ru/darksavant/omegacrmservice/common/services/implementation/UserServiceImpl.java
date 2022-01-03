@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             throw new BadRequestException("User with name " + userName + " already exist");
         if (roleService.findByName(role).isEmpty())
             throw new BadRequestException("User role " + role + " not found");
-
         User newUser = new User();
         newUser.setUsername(userName);
         newUser.setPassword(passwordEncoder.encode(password));
@@ -53,7 +52,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         newUser.setRoles(List.of(roleService.findByName(role).get()));
         User registeredUser = userRepository.save(newUser);
         log.info("New user with name {} registered", userName);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(new UserDTO(registeredUser));
     }
 

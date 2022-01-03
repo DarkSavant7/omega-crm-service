@@ -1,46 +1,67 @@
 package ru.darksavant.omegacrmservice.common.entities.dto;
 
-import lombok.*;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.lang.Nullable;
 import ru.darksavant.omegacrmservice.common.entities.Good;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
+@Schema(description = "DTO описания товара")
 public class GoodDTO {
 
-    private int vendorCode;
+    @Schema(description = "ID товара")
+    private Long id;
 
+    @Schema(description = "Артикул товара")
+    @Nullable
+    private Integer vendorCode;
+
+    @Schema(description = "Название товара")
+    @Nullable
     private String title;
 
+    @Schema(description = "Цена товара")
+    @Nullable
     private BigDecimal price;
 
+    @Schema(description = "Ссылка на общую фотографию товара")
+    @Nullable
     private String urlPreview;
 
+    @Schema(description = "Ссылка на превью товара")
+    @Nullable
     private String urlFull;
 
+    @Schema(description = "Описание товара")
+    @Nullable
     private String description;
 
+    @Schema(description = "Категории товара")
+    @Nullable
     private List<CategoryDTO> categories;
 
+    @Schema(description = "Поставщики товара")
+    @Nullable
     private List<ProducerDTO> producers;
 
+    @Schema(description = "Склады товара")
+    @Nullable
     private List<WarehouseDTO> warehouses;
 
 
     public GoodDTO(Good good) {
+        this.id = good.getId();
         this.vendorCode=good.getVendorCode();
         this.title=good.getTitle();
         this.price=good.getPrice();
