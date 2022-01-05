@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @AllArgsConstructor
-public class ServiceDTO {
+public class ServiceDto {
 
     private String description;
 
@@ -22,12 +22,12 @@ public class ServiceDTO {
 
     private BigDecimal price;
 
-    private List<ServiceCategoryDTO> category;
+    private List<ServiceCategoryDto> category;
 
-    public ServiceDTO(Service service) {
+    public ServiceDto(Service service) {
         this.description=service.getDescription();
         this.title=service.getTitle();
         this.price=service.getPrice();
-        this.category=service.getCategory().stream().map(ServiceCategoryDTO::new).collect(Collectors.toList());
+        this.category=service.getCategory().stream().map(ServiceCategoryDto::new).collect(Collectors.toList());
     }
 }

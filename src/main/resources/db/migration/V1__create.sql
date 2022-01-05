@@ -3,9 +3,9 @@ create table if not exists users
     id         bigserial primary key,
     username   varchar(50) not null unique,
     password   varchar(80) not null,
-    email      varchar(50) unique,
+    email      varchar(255) unique,
     status     varchar(10) not null default 'ACTIVE'
-        check (status in ('ACTIVE', 'CREATED','BLOCKED', 'DELETED')),
+        check (status in ('ACTIVE', 'CREATED', 'BLOCKED', 'DELETED')),
     created_at timestamp            default current_timestamp,
     updated_at timestamp            default current_timestamp
 );
@@ -28,7 +28,7 @@ CREATE TABLE if not exists users_roles
 create table if not exists goods
 (
     id          bigserial primary key,
-    vendor_code integer        unique,
+    vendor_code varchar(255) unique,
     title       varchar(255)   not null,
     price       numeric(10, 2) not null,
     url_preview varchar(255),
@@ -231,15 +231,17 @@ create table if not exists tasks
 
 );
 
-create table if not exists warehouses(
-    id_warehouse bigserial not null primary key ,
-    description varchar(255) not null
+create table if not exists warehouses
+(
+    id_warehouse bigserial    not null primary key,
+    description  varchar(255) not null
 
 );
 
-create table if not exists warehouses_goods(
-    warehouse_id bigint not null references warehouses(id_warehouse),
-    good_id bigint not null references goods(id),
+create table if not exists warehouses_goods
+(
+    warehouse_id bigint         not null references warehouses (id_warehouse),
+    good_id      bigint         not null references goods (id),
     quantity     numeric(10, 2) not null
 );
 

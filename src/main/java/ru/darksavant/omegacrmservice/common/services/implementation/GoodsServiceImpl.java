@@ -7,8 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.darksavant.omegacrmservice.common.entities.Good;
-import ru.darksavant.omegacrmservice.common.entities.dto.GoodDTO;
-import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
+import ru.darksavant.omegacrmservice.common.entities.dto.GoodDto;
 import ru.darksavant.omegacrmservice.common.repositories.GoodRepository;
 import ru.darksavant.omegacrmservice.common.services.interfaces.GoodsService;
 import ru.darksavant.omegacrmservice.errors.BadRequestException;
@@ -24,27 +23,27 @@ public class GoodsServiceImpl implements GoodsService {
     private final GoodRepository goodRepository;
 
     @Override
-    public ResponseEntity<GoodDTO> findByVendorCode(int code) {
-        return ResponseEntity.ok().body(new GoodDTO(goodRepository.findGoodByVendorCode(code)
+    public ResponseEntity<GoodDto> findByVendorCode(int code) {
+        return ResponseEntity.ok().body(new GoodDto(goodRepository.findGoodByVendorCode(code)
                 .orElseThrow(() -> new ResourceNotFoundException("Товар не найден"))));
     }
 
     @Override
-    public ResponseEntity<GoodDTO> findByTitle(String title) {
-        return ResponseEntity.ok().body(new GoodDTO(goodRepository.findGoodByTitle(title)
+    public ResponseEntity<GoodDto> findByTitle(String title) {
+        return ResponseEntity.ok().body(new GoodDto(goodRepository.findGoodByTitle(title)
                 .orElseThrow(() -> new ResourceNotFoundException("Товар не найден"))));
     }
 
     @Override
-    public ResponseEntity<List<GoodDTO>> findAllWereTitleLike(String reg) {
+    public ResponseEntity<List<GoodDto>> findAllWereTitleLike(String reg) {
         return ResponseEntity.ok().body(goodRepository.findAllByTitleLike(reg)
-                .stream().map(GoodDTO::new).collect(Collectors.toList()));
+                .stream().map(GoodDto::new).collect(Collectors.toList()));
     }
 
     @Override
-    public ResponseEntity<List<GoodDTO>> findAllWereDescriptionLike(String reg) {
+    public ResponseEntity<List<GoodDto>> findAllWereDescriptionLike(String reg) {
         return ResponseEntity.ok().body(goodRepository.findAllByDescriptionLike(reg)
-                .stream().map(GoodDTO::new).collect(Collectors.toList()));
+                .stream().map(GoodDto::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -54,25 +53,19 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public ResponseEntity<GoodDTO> findById(Long id) {
-        return ResponseEntity.ok().body(new GoodDTO(goodRepository.findById(id)
+    public ResponseEntity<GoodDto> findById(Long id) {
+        return ResponseEntity.ok().body(new GoodDto(goodRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Товар не найден"))));
     }
 
     @Override
     public ResponseEntity<String> save(String vendorCode, String title, String price) {
-        int code;
         BigDecimal cost = new BigDecimal(price);
-        if (vendorCode != null) {
-            code = Integer.parseInt(vendorCode);
-        } else {
-            code = 0;
-        }
         if (cost.signum() < 0) {
             throw new BadRequestException("Стоимость товара не может быть отрицательной");
         }
         Good newGood = new Good();
-        newGood.setVendorCode(code);
+        newGood.setVendorCode(vendorCode);
         newGood.setTitle(title);
         newGood.setPrice(cost);
         goodRepository.save(newGood);
@@ -80,8 +73,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public ResponseEntity<Page<GoodDTO>> findAll(Specification<Good> spec, Integer page, Integer pageSize) {
-        return ResponseEntity.ok().body(goodRepository.findAll(spec, PageRequest.of(page-1,pageSize)).map(GoodDTO::new));
+    public ResponseEntity<Page<GoodDto>> findAll(Specification<Good> spec, Integer page, Integer pageSize) {
+        return ResponseEntity.ok().body(goodRepository.findAll(spec, PageRequest.of(page-1,pageSize)).map(GoodDto::new));
     }
 
 }

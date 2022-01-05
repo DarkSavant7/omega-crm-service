@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.darksavant.omegacrmservice.common.entities.dto.CategoryDTO;
+import ru.darksavant.omegacrmservice.common.entities.dto.CategoryDto;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface GoodsCategoryController {
             @ApiResponse(responseCode = "200", description = "Категории успешно найдены",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = String.class))})})
-    ResponseEntity<List<CategoryDTO>> findByName();
+    ResponseEntity<List<CategoryDto>> findByName();
 
     @PostMapping("/new")
     @Operation(summary = "Создание новой категории товаров")

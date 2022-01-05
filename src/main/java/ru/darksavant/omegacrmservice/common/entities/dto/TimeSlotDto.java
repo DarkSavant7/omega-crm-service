@@ -10,25 +10,25 @@ import ru.darksavant.omegacrmservice.common.entities.TimeSlot;
 @Setter
 @ToString
 @AllArgsConstructor
-public class TimeSlotDTO {
+public class TimeSlotDto {
 
     private String start;
 
     private String end;
 
-    private JobDTO job;
+    private JobDto job;
 
-    private StatusDTO status;
+    private StatusDto status;
 
     private String createdAt;
 
     private String updatedAt;
 
-    public TimeSlotDTO(TimeSlot slot) {
+    public TimeSlotDto(TimeSlot slot) {
         this.start=slot.getStart().toString();
         this.end=slot.getEnd().toString();
-        this.job=new JobDTO(slot.getJob());
-        this.status=new StatusDTO(slot.getStatus());
+        this.job=new JobDto(slot.getJob());
+        this.status=new StatusDto(slot.getStatus());
         this.createdAt=slot.getCreatedAt().toString();
         this.updatedAt=slot.getUpdatedAt().toString();
     }

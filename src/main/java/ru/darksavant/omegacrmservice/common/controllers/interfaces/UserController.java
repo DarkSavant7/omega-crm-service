@@ -12,8 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
-import ru.darksavant.omegacrmservice.common.entities.dto.GoodDTO;
-import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
+import ru.darksavant.omegacrmservice.common.entities.dto.UserDto;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 
 import java.security.Principal;
@@ -28,30 +27,30 @@ public interface UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Смена пароля успешно проведена",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserDTO.class))})})
-    ResponseEntity<UserDTO> changePassword(@Parameter(hidden = true) Principal principal,
+                            schema = @Schema(implementation = UserDto.class))})})
+    ResponseEntity<UserDto> changePassword(@Parameter(hidden = true) Principal principal,
                                            @Parameter(description = "Старый пароль") @RequestParam(name = "oldPassword") String oldPassword,
                                            @Parameter(description = "Новый пароль") @RequestParam(name = "newPassword") String newPassword);
 
-    @GetMapping("/get_user")
+    @GetMapping()
     @Operation(summary = "Найти пользователя по имени, почте или id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Пользователь успешно найден в системе",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserDTO.class))})})
-    ResponseEntity<Page<UserDTO>> findUser(@Parameter(hidden = true) @RequestParam(name = "page", defaultValue = "1") Integer page,
+                            schema = @Schema(implementation = UserDto.class))})})
+    ResponseEntity<Page<UserDto>> findUser(@Parameter(hidden = true) @RequestParam(name = "page", defaultValue = "1") Integer page,
                                            @Parameter(hidden = true) @RequestParam(name = "page_size", defaultValue = "10") Integer pageSize,
                                            @Parameter(description = "Имя пользователя") @RequestParam(required = false, name = "name") @Nullable String userName,
                                            @Parameter(description = "Email пользователя") @RequestParam(required = false, name = "email") @Nullable String email,
                                            @Parameter(description = "Id пользователя") @RequestParam(required = false, name = "id") @Nullable Long id);
 
-    @PutMapping("/update")
+    @PutMapping()
     @Operation(summary = "Обновление информации о пользователе")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Информация обновлена успешно",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserDTO.class))})})
-    ResponseEntity<UserDTO> update(@Parameter(description = "Имя пользователя") @RequestParam(required = false, name = "username") @Nullable String username,
+                            schema = @Schema(implementation = UserDto.class))})})
+    ResponseEntity<UserDto> update(@Parameter(description = "Имя пользователя") @RequestParam(required = false, name = "username") @Nullable String username,
                                    @Parameter(description = "Статус") @RequestParam(required = false, name = "status") @Nullable UserStatus status,
                                    @Parameter(description = "Роль") @RequestParam(required = false, name = "role") @Nullable String role );
 

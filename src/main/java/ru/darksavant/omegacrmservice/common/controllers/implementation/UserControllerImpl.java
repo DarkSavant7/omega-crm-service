@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.darksavant.omegacrmservice.common.controllers.interfaces.UserController;
-import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
+import ru.darksavant.omegacrmservice.common.entities.dto.UserDto;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 import ru.darksavant.omegacrmservice.common.repositories.specifications.UserSpecification;
 import ru.darksavant.omegacrmservice.common.services.interfaces.UserService;
@@ -21,12 +21,12 @@ public class UserControllerImpl implements UserController {
 
 
     @Override
-    public ResponseEntity<UserDTO> changePassword(Principal principal, String oldPassword, String newPassword) {
-        return ResponseEntity.ok(userService.changePassword(principal.getName(),oldPassword,newPassword));
+    public ResponseEntity<UserDto> changePassword(Principal principal, String oldPassword, String newPassword) {
+        return ResponseEntity.ok(userService.changePassword(principal.getName(), oldPassword, newPassword));
     }
 
     @Override
-    public ResponseEntity<Page<UserDTO>> findUser(Integer page, Integer pageSize, String userName, String email, Long id) {
+    public ResponseEntity<Page<UserDto>> findUser(Integer page, Integer pageSize, String userName, String email, Long id) {
         if (page < 1) {
             page = 1;
         }
@@ -34,7 +34,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<UserDTO> update(String username, UserStatus status, String role) {
+    public ResponseEntity<UserDto> update(String username, UserStatus status, String role) {
         return null;
     }
 }

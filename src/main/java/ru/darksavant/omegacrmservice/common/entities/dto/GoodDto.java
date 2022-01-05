@@ -8,7 +8,6 @@ import lombok.ToString;
 import org.springframework.lang.Nullable;
 import ru.darksavant.omegacrmservice.common.entities.Good;
 
-import javax.validation.constraints.Null;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,14 +17,14 @@ import java.util.stream.Collectors;
 @ToString
 @AllArgsConstructor
 @Schema(description = "DTO описания товара")
-public class GoodDTO {
+public class GoodDto {
 
     @Schema(description = "ID товара")
     private Long id;
 
     @Schema(description = "Артикул товара")
     @Nullable
-    private Integer vendorCode;
+    private String vendorCode;
 
     @Schema(description = "Название товара")
     @Nullable
@@ -49,18 +48,18 @@ public class GoodDTO {
 
     @Schema(description = "Категории товара")
     @Nullable
-    private List<CategoryDTO> categories;
+    private List<CategoryDto> categories;
 
     @Schema(description = "Поставщики товара")
     @Nullable
-    private List<ProducerDTO> producers;
+    private List<ProducerDto> producers;
 
     @Schema(description = "Склады товара")
     @Nullable
-    private List<WarehouseDTO> warehouses;
+    private List<WarehouseDto> warehouses;
 
 
-    public GoodDTO(Good good) {
+    public GoodDto(Good good) {
         this.id = good.getId();
         this.vendorCode=good.getVendorCode();
         this.title=good.getTitle();
@@ -68,8 +67,8 @@ public class GoodDTO {
         this.urlPreview=good.getUrlPreview();
         this.urlFull=good.getUrlFull();
         this.description=good.getDescription();
-        this.categories=good.getCategories().stream().map(CategoryDTO::new).collect(Collectors.toList());
-        this.producers=good.getProducers().stream().map(ProducerDTO::new).collect(Collectors.toList());
-        this.warehouses=good.getWarehouses().stream().map(WarehouseDTO::new).collect(Collectors.toList());
+        this.categories=good.getCategories().stream().map(CategoryDto::new).collect(Collectors.toList());
+        this.producers=good.getProducers().stream().map(ProducerDto::new).collect(Collectors.toList());
+        this.warehouses=good.getWarehouses().stream().map(WarehouseDto::new).collect(Collectors.toList());
     }
 }

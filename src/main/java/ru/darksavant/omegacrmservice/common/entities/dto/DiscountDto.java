@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 @Setter
 @ToString
 @AllArgsConstructor
-public class DiscountDTO {
+public class DiscountDto {
 
     private String name;
 
     private BigDecimal amount;
 
-    public DiscountDTO(Discount discount) {
+    public DiscountDto(Discount discount) {
         this.name=discount.getName();
         this.amount=discount.getAmount();
     }

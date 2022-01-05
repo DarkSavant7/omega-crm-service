@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @ToString
 @AllArgsConstructor
-public class SaleDTO {
+public class SaleDto {
 
     private Long id;
 
@@ -21,31 +21,31 @@ public class SaleDTO {
 
     private BigDecimal totalAmount;
 
-    private DiscountDTO discount;
+    private DiscountDto discount;
 
-    private PaymentTypeDTO type;
+    private PaymentTypeDto type;
 
-    private SaleStatusDTO status;
+    private SaleStatusDto status;
 
-    private UserDTO saler;
+    private UserDto saler;
 
-    private ContactDTO buyer;
+    private ContactDto buyer;
 
     private String createdAt;
 
     private String updatedAt;
 
-    private List<SalesItemsDTO> items;
+    private List<SalesItemsDto> items;
 
-    public SaleDTO(Sale sale) {
+    public SaleDto(Sale sale) {
         this.id = sale.getId();
         this.saleDate=sale.getSaleDate().toString();
         this.totalAmount=sale.getTotalAmount();
-        this.discount=new DiscountDTO(sale.getDiscount());
-        this.type=new PaymentTypeDTO(sale.getType());
-        this.status=new SaleStatusDTO(sale.getStatus());
-        this.saler=new UserDTO(sale.getSaler());
-        this.buyer=new ContactDTO(sale.getBuyer());
+        this.discount=new DiscountDto(sale.getDiscount());
+        this.type=new PaymentTypeDto(sale.getType());
+        this.status=new SaleStatusDto(sale.getStatus());
+        this.saler=new UserDto(sale.getSaler());
+        this.buyer=new ContactDto(sale.getBuyer());
         this.createdAt=sale.getCreatedAt().toString();
         this.updatedAt=sale.getUpdatedAt().toString();
     }

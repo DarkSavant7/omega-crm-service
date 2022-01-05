@@ -8,11 +8,11 @@ import ru.darksavant.omegacrmservice.common.entities.Priority;
 @Setter
 @ToString
 @AllArgsConstructor
-public class PriorityDTO {
+public class PriorityDto {
 
     private String description;
 
-    public PriorityDTO(Priority priority) {
+    public PriorityDto(Priority priority) {
         this.description=priority.getDescription();
     }
 }

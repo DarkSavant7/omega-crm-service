@@ -1,20 +1,17 @@
 package ru.darksavant.omegacrmservice.common.entities.dto;
 
 import lombok.*;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import ru.darksavant.omegacrmservice.common.entities.MedicalCard;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
-public class MedicalCardDTO {
+public class MedicalCardDto {
 
     private String description;
 
-    public MedicalCardDTO(MedicalCard card) {
+    public MedicalCardDto(MedicalCard card) {
         this.description=card.getDescription();
     }
 }

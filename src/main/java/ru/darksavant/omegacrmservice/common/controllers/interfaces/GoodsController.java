@@ -11,42 +11,42 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
-import ru.darksavant.omegacrmservice.common.entities.dto.GoodDTO;
+import ru.darksavant.omegacrmservice.common.entities.dto.GoodDto;
 
 @Tag(name = "Контроллер для товаров")
 @CrossOrigin("*")
 @RequestMapping("/api/v1/goods")
 public interface GoodsController {
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     @Operation(summary = "Поиск товара по ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Товар найден",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GoodDTO.class))})})
-    ResponseEntity<GoodDTO> findByID(@Parameter(description = "ID товара") @RequestParam(name = "ID")Long id);
+                            schema = @Schema(implementation = GoodDto.class))})})
+    ResponseEntity<GoodDto> findByID(@Parameter(description = "ID товара") @PathVariable(name = "id")Long id);
 
     @GetMapping("/codes")
     @Operation(summary = "Поиск товара по коду")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Товар найден",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GoodDTO.class))})})
-    ResponseEntity<GoodDTO> findByVendorCode(@Parameter(description = "артикул товара") @RequestParam(name = "code") int code);
+                            schema = @Schema(implementation = GoodDto.class))})})
+    ResponseEntity<GoodDto> findByVendorCode(@Parameter(description = "артикул товара") @RequestParam(name = "code") int code);
 
-    @GetMapping("/get_goods")
+    @GetMapping()
     @Operation(summary = "Поиск товаров по названию, описанию или категории")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Товары успешно найдены в системе",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GoodDTO.class))})})
-    ResponseEntity<Page<GoodDTO>> findGoods(@Parameter(hidden = true) @RequestParam(name = "page", defaultValue = "1") Integer page,
+                            schema = @Schema(implementation = GoodDto.class))})})
+    ResponseEntity<Page<GoodDto>> findGoods(@Parameter(hidden = true) @RequestParam(name = "page", defaultValue = "1") Integer page,
                                             @Parameter(hidden = true) @RequestParam(name = "page_size", defaultValue = "10") Integer pageSize,
                                             @Parameter(description = "Название") @RequestParam(required = false, name = "title") @Nullable String title,
                                             @Parameter(description = "Описание") @RequestParam(required = false, name = "description") @Nullable String description,
                                             @Parameter(description = "Категория") @RequestParam(required = false, name = "category") @Nullable String category);
 
-    @PostMapping("/new")
+    @PostMapping()
     @Operation(summary = "Создание нового товара")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Новый товар успешно создан",
@@ -56,21 +56,21 @@ public interface GoodsController {
                                 @Parameter(description = "Название") @RequestParam(required = false, name = "title") String title,
                                 @Parameter(description = "Цена") @RequestParam(required = false, name = "price") String price);
 
-    @PutMapping("/update")
+    @PutMapping()
     @Operation(summary = "Обновление информации о товаре")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Информация обновлена успешно",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = GoodDTO.class))})})
-    ResponseEntity<GoodDTO> update(@Parameter(description = "DTO товара") @RequestBody GoodDTO dto);
+                            schema = @Schema(implementation = GoodDto.class))})})
+    ResponseEntity<GoodDto> update(@Parameter(description = "DTO товара") @RequestBody GoodDto dto);
 
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/{id}")
     @Operation(summary = "Удаление товара по ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Товар успешно удален",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = String.class))})})
-    ResponseEntity<String> delete(@Parameter(description = "ID") @RequestParam(required = false, name = "ID") Long id);
+    ResponseEntity<String> delete(@Parameter(description = "ID") @PathVariable (name = "id") Long id);
 
 }
