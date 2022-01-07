@@ -26,7 +26,7 @@ public interface GoodsCategoryController {
                             schema = @Schema(implementation = String.class))})})
     ResponseEntity<List<CategoryDto>> findByName();
 
-    @PostMapping("/new")
+    @PostMapping()
     @Operation(summary = "Создание новой категории товаров")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Новая категория успешно создана",
@@ -34,7 +34,7 @@ public interface GoodsCategoryController {
                             schema = @Schema(implementation = String.class))})})
     ResponseEntity<String> save(@Parameter(description = "Название") @RequestParam(name = "name") String name);
 
-    @PutMapping("/update")
+    @PutMapping()
     @Operation(summary = "Изменение названия категории товаров")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Название успешно изменено",
@@ -43,14 +43,13 @@ public interface GoodsCategoryController {
     ResponseEntity<String> update(@Parameter(description = "Текущее название") @RequestParam(name = "oldname") String oldname,
                                   @Parameter(description = "Новое название") @RequestParam(name = "newname") String newname);
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "Удаление категории товаров")
+    @DeleteMapping( "/{id}")
+    @Operation(summary = "Удаление категории товаров по id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Категория успешно удалена",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = String.class))})})
-    ResponseEntity<String> delete(@Parameter(description = "Название") @RequestParam(name = "name") String name);
+    ResponseEntity<String> delete(@Parameter(description = "ID") @PathVariable(name = "id") Long id);
 
-    void deleteById(Long id);
 
 }

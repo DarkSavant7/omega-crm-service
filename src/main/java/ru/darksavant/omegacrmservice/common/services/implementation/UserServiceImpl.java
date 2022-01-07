@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public UserDto changePassword(String name, String oldPassword, String newPassword) {
         User user = userRepository.findByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        if (user.getPassword().equals(passwordEncoder.encode(oldPassword))) {
+        if (passwordEncoder.matches(oldPassword,user.getPassword())) {
             user.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(user);
             user = userRepository.findByUsername(name).get();
