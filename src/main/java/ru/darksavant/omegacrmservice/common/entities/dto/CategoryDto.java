@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @AllArgsConstructor
-public class CategoryDTO {
+public class CategoryDto {
 
     private String name;
 
-    private List<GoodDTO> goods;
+    private List<GoodDto> goods;
 
-    public CategoryDTO(Category category) {
+    public CategoryDto(Category category) {
         this.name= category.getName();
-        this.goods=category.getGoods().stream().map(GoodDTO::new).collect(Collectors.toList());
+        this.goods=category.getGoods().stream().map(GoodDto::new).collect(Collectors.toList());
     }
 }

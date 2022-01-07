@@ -7,14 +7,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.darksavant.omegacrmservice.beans.JwtTokenUtil;
 import ru.darksavant.omegacrmservice.common.controllers.interfaces.AuthController;
 import ru.darksavant.omegacrmservice.common.entities.User;
 import ru.darksavant.omegacrmservice.common.entities.dto.JwtRequest;
 import ru.darksavant.omegacrmservice.common.entities.dto.JwtResponse;
-import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 import ru.darksavant.omegacrmservice.common.services.interfaces.UserService;
 import ru.darksavant.omegacrmservice.errors.BadRequestException;
@@ -42,11 +40,5 @@ public class AuthControllerImpl implements AuthController {
         log.info("Success logged user {} with roles: {}", user.getUsername(), user.getRoles());
         return ResponseEntity.ok(new JwtResponse(token));
     }
-
-    @Override
-    public ResponseEntity<UserDTO> createUser(String userName, String password,String role) {
-        return userService.createUser(userName, password,role);
-    }
-
 
 }

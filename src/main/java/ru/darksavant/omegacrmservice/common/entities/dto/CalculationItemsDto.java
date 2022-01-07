@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ru.darksavant.omegacrmservice.common.entities.CalculationItems;
-import ru.darksavant.omegacrmservice.common.entities.Good;
 
 import java.math.BigDecimal;
 
@@ -13,14 +12,14 @@ import java.math.BigDecimal;
 @Setter
 @ToString
 @AllArgsConstructor
-public class CalculationItemsDTO {
+public class CalculationItemsDto {
 
-    private GoodDTO good;
+    private GoodDto good;
 
     private BigDecimal quantity;
 
-    public CalculationItemsDTO(CalculationItems items) {
-        good=new GoodDTO(items.getGood());
+    public CalculationItemsDto(CalculationItems items) {
+        good=new GoodDto(items.getGood());
         quantity=items.getQuantity();
     }
 }

@@ -10,7 +10,7 @@ import ru.darksavant.omegacrmservice.common.entities.SaleStatus;
 @Setter
 @ToString
 @AllArgsConstructor
-public class SaleStatusDTO {
+public class SaleStatusDto {
 
     private String name;
 
@@ -18,7 +18,7 @@ public class SaleStatusDTO {
 
     private String  updatedAt;
 
-    public SaleStatusDTO(SaleStatus saleStatus) {
+    public SaleStatusDto(SaleStatus saleStatus) {
         this.name=saleStatus.getName();
         this.createdAt=saleStatus.getCreatedAt().toString();
         this.updatedAt=saleStatus.getUpdatedAt().toString();

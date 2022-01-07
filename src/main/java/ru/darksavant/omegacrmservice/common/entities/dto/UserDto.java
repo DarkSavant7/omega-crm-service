@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @AllArgsConstructor
-public class UserDTO {
+public class UserDto {
 
     private String username;
 
@@ -22,12 +22,12 @@ public class UserDTO {
 
     private UserStatus status;
 
-    private List<RoleDTO> roles;
+    private List<RoleDto> roles;
 
-    public UserDTO(User user) {
+    public UserDto(User user) {
         this.username=user.getUsername();
         this.email=user.getEmail();
         this.status=user.getStatus();
-        this.roles=user.getRoles().stream().map(RoleDTO::new).collect(Collectors.toList());
+        this.roles=user.getRoles().stream().map(RoleDto::new).collect(Collectors.toList());
     }
 }

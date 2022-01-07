@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -31,15 +32,17 @@ public class Good {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Vendor code must NOT be empty")
+    @NotBlank(message = "Артикул товара не может быть пустым")
     @Column(name = "vendor_code", unique = true)
-    private int vendorCode;
+    @Length(message = "Длинна артикула быть от 3 до 255 знаков", min = 3, max = 255)
+    private String vendorCode;
 
-    @NotBlank(message = "Title must NOT be empty")
+    @NotBlank(message = "Название товара не может быть пустым")
+    @Length(message = "Длинна названия быть от 3 до 255 знаков", min = 3, max = 255)
     @Column(name = "title")
     private String title;
 
-    @NotBlank(message = "Price must NOT be empty")
+    @NotBlank(message = "Цена товара не может быть пустой")
     @Column(name = "price")
     private BigDecimal price;
 

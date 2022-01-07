@@ -11,9 +11,9 @@ import ru.darksavant.omegacrmservice.common.entities.Producer;
 @Setter
 @ToString
 @AllArgsConstructor
-public class ProducerDTO {
+public class ProducerDto {
 
-    private ContactDTO contact;
+    private ContactDto contact;
 
     private String designation;
 
@@ -23,8 +23,8 @@ public class ProducerDTO {
 
      private String website;
 
-    public ProducerDTO(Producer producer) {
-        this.contact=new ContactDTO(producer.getContact());
+    public ProducerDto(Producer producer) {
+        this.contact=new ContactDto(producer.getContact());
         this.description=producer.getDescription();
         this.INN=producer.getINN();
         this.description=producer.getDescription();

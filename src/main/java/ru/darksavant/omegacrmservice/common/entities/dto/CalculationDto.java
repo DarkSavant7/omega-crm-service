@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @AllArgsConstructor
-public class CalculationDTO {
-    private final GoodDTO good;
+public class CalculationDto {
+    private final GoodDto good;
 
-    private List<CalculationItemsDTO> items;
+    private List<CalculationItemsDto> items;
 
-    public CalculationDTO(Calculation calculation) {
-        this.good=new GoodDTO(calculation.getGood());
-        this.items=calculation.getItems().stream().map(CalculationItemsDTO::new).collect(Collectors.toList());
+    public CalculationDto(Calculation calculation) {
+        this.good=new GoodDto(calculation.getGood());
+        this.items=calculation.getItems().stream().map(CalculationItemsDto::new).collect(Collectors.toList());
 
     }
 }

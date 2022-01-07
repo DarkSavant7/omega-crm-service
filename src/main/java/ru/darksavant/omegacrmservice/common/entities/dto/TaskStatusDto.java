@@ -11,12 +11,12 @@ import ru.darksavant.omegacrmservice.common.entities.TaskStatus;
 @Setter
 @ToString
 @AllArgsConstructor
-public class TaskStatusDTO {
+public class TaskStatusDto {
 
     private String description;
 
 
-    public TaskStatusDTO(TaskStatus status) {
+    public TaskStatusDto(TaskStatus status) {
         this.description = status.getDescription();
     }
 }

@@ -11,11 +11,11 @@ import ru.darksavant.omegacrmservice.common.entities.WorkPlace;
 @Setter
 @ToString
 @AllArgsConstructor
-public class WorkPlaceDTO {
+public class WorkPlaceDto {
 
     private String title;
 
-    public WorkPlaceDTO(WorkPlace workPlace) {
+    public WorkPlaceDto(WorkPlace workPlace) {
         this.title=workPlace.getTitle();
     }
 }

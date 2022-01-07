@@ -1,24 +1,29 @@
 package ru.darksavant.omegacrmservice.common.services.interfaces;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import ru.darksavant.omegacrmservice.common.entities.Good;
+import ru.darksavant.omegacrmservice.common.entities.dto.GoodDto;
 
 import java.util.List;
 
 
 public interface GoodsService {
 
-    Good findByVendorCode(int code);
+    ResponseEntity<GoodDto> findByVendorCode(int code);
 
-    Good findByTitle(String title);
+    ResponseEntity<GoodDto>  findByTitle(String title);
 
-    List<Good> findAllWereTitleLike(String reg);
+    ResponseEntity<List<GoodDto>> findAllWereTitleLike(String reg);
 
-    List<Good> findAllWereDescriptionLike(String reg);
+    ResponseEntity<List<GoodDto>>findAllWereDescriptionLike(String reg);
 
-    Good save(Good d);
+    ResponseEntity<String> deleteById(Long id);
 
-    void delete(Good d);
+    ResponseEntity<GoodDto> findById(Long id);
 
-    void deleteById(Long id);
+    ResponseEntity<String> save(String vendorCode, String title, String price);
 
+    ResponseEntity<Page<GoodDto>> findAll(Specification<Good> build, Integer page, Integer pageSize);
 }

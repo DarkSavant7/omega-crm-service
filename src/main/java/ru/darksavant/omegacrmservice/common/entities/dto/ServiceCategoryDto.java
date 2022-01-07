@@ -11,11 +11,11 @@ import ru.darksavant.omegacrmservice.common.entities.ServiceCategory;
 @Setter
 @ToString
 @AllArgsConstructor
-public class ServiceCategoryDTO {
+public class ServiceCategoryDto {
 
     private String name;
 
-    public ServiceCategoryDTO(ServiceCategory serviceCategory) {
+    public ServiceCategoryDto(ServiceCategory serviceCategory) {
         this.name=serviceCategory.getName();
     }
 }

@@ -16,15 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.darksavant.omegacrmservice.common.entities.Role;
 import ru.darksavant.omegacrmservice.common.entities.User;
-import ru.darksavant.omegacrmservice.common.entities.dto.UserDTO;
+import ru.darksavant.omegacrmservice.common.entities.dto.RegisterUserDto;
+import ru.darksavant.omegacrmservice.common.entities.dto.UserDto;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 import ru.darksavant.omegacrmservice.common.repositories.UserRepository;
 import ru.darksavant.omegacrmservice.common.services.interfaces.RoleService;
 import ru.darksavant.omegacrmservice.common.services.interfaces.UserService;
 import ru.darksavant.omegacrmservice.errors.BadRequestException;
+import ru.darksavant.omegacrmservice.errors.ChangePasswordException;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -39,22 +40,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<UserDTO> createUser(String userName, String password, String role) {
-        log.info("Admin ask for registration new user with name {}, password {} and role {}", userName, password, role);
-        if (findByUsername(userName).isPresent())
-            throw new BadRequestException("User with name " + userName + " already exist");
-        if (roleService.findByName(role).isEmpty())
-            throw new BadRequestException("User role "+ role+" not found");
-
+    public ResponseEntity<UserDto> createUser(RegisterUserDto dto) {
+        log.info("Admin ask for registration new user with name {}, password {}, email {} and role {}", dto.getUsername(), dto.getPassword(), dto.getEmail(), dto.getRole());
+        if (findByUsername(dto.getUsername()).isPresent())
+            throw new BadRequestException("User with name " + dto.getUsername() + " already exist");
+        if (roleService.findByName(dto.getRole()).isEmpty())
+            throw new BadRequestException("User role " + dto.getRole() + " not found");
         User newUser = new User();
-        newUser.setUsername(userName);
-        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setUsername(dto.getUsername());
+        newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
         newUser.setStatus(UserStatus.CREATED);
-        newUser.setRoles(List.of(roleService.findByName(role).get()));
+        newUser.setRoles(List.of(roleService.findByName(dto.getRole()).get()));
         User registeredUser = userRepository.save(newUser);
-        log.info("New user with name {} registered", userName);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDTO(registeredUser));
+        log.info("New user with name {} registered", dto.getUsername());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDto(registeredUser));
     }
 
     public User blockUser(Long userId) {
@@ -101,7 +100,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public Page<UserDTO> findAll(Specification<User> specification, Integer page, Integer pageSize) {
-        return userRepository.findAll(specification, PageRequest.of(page-1,pageSize)).map(UserDTO::new);
+    public Page<UserDto> findAll(Specification<User> specification, Integer page, Integer pageSize) {
+        return userRepository.findAll(specification, PageRequest.of(page - 1, pageSize)).map(UserDto::new);
+    }
+
+    @Override
+    public UserDto changePassword(String name, String oldPassword, String newPassword) {
+        User user = userRepository.findByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (passwordEncoder.matches(oldPassword,user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            user = userRepository.findByUsername(name).get();
+        } else {
+            throw new ChangePasswordException("Password do not mach.");
+        }
+        return new UserDto(user);
     }
 }
