@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 import ru.darksavant.omegacrmservice.common.controllers.interfaces.GoodsController;
 import ru.darksavant.omegacrmservice.common.entities.dto.GoodDto;
@@ -18,31 +19,46 @@ public class GoodsControllerImpl implements GoodsController {
 
     @Override
     public ResponseEntity<GoodDto> findByID(Long id) {
-        return goodsService.findById(id);
+        return ResponseEntity.ok().body(new GoodDto(goodsService.findById(id)));
     }
 
     @Override
     public ResponseEntity<GoodDto> findByVendorCode(int code) {
-        return goodsService.findByVendorCode(code);
+        return ResponseEntity.ok().body(new GoodDto(goodsService.findByVendorCode(code)));
     }
 
     @Override
     public ResponseEntity<Page<GoodDto>> findGoods(Integer page, Integer pageSize, String title, String description, String category) {
-        return goodsService.findAll(GoodsSpecification.build(title, description, category), page, pageSize);
+        return ResponseEntity.ok().body(goodsService.findAll(GoodsSpecification.build(title, description, category), page, pageSize).map(GoodDto::new));
     }
 
     @Override
+    @Transactional
     public ResponseEntity<String> save(String vendorCode, String title, String price) {
-        return goodsService.save(vendorCode, title, price);
+        ResponseEntity<String> response;
+        try {
+            goodsService.save(vendorCode, title, price);
+            response = ResponseEntity.ok().body("Товар успешно создан");
+        } catch (Exception e) {
+            response = ResponseEntity.badRequest().body("Товар не создан");
+        }
+        return response;
     }
 
     @Override
     public ResponseEntity<GoodDto> update(GoodDto dto) {
-        return null;
+        return ResponseEntity.ok().body(new GoodDto(goodsService.update(dto)));
     }
 
     @Override
     public ResponseEntity<String> delete(Long id) {
-        return goodsService.deleteById(id);
+        ResponseEntity<String> response;
+        try {
+            goodsService.deleteById(id);
+            response = ResponseEntity.ok().body("Товар успешно удален");
+        } catch (Exception e) {
+            response = ResponseEntity.badRequest().body("Ошибка удаления товара");
+        }
+        return response;
     }
 }

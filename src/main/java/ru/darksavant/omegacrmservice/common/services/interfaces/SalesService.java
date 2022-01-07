@@ -8,7 +8,7 @@ public interface SalesService {
 
 
 //    public CalculationItems findByID(Long id) {
-//        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Calculation Items not found"));
+//        return repository.findByIdResponseDto(id).orElseThrow(() -> new ResourceNotFoundException("Calculation Items not found"));
 //    }
 //
 //    public CalculationItems findByGood(Good good){

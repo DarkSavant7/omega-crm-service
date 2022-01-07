@@ -11,19 +11,29 @@ import java.util.List;
 
 public interface GoodsService {
 
-    ResponseEntity<GoodDto> findByVendorCode(int code);
+    Good findByVendorCode(int code);
 
-    ResponseEntity<GoodDto>  findByTitle(String title);
+    Good findByTitle(String title);
 
-    ResponseEntity<List<GoodDto>> findAllWereTitleLike(String reg);
+    List<Good> findAllWereTitleLike(String reg);
 
-    ResponseEntity<List<GoodDto>>findAllWereDescriptionLike(String reg);
+    List<Good> findAllWereDescriptionLike(String reg);
 
-    ResponseEntity<String> deleteById(Long id);
+    void deleteById(Long id);
 
-    ResponseEntity<GoodDto> findById(Long id);
+    Good save(String vendorCode, String title, String price);
 
-    ResponseEntity<String> save(String vendorCode, String title, String price);
+    Page<Good> findAll(Specification<Good> build, Integer page, Integer pageSize);
 
-    ResponseEntity<Page<GoodDto>> findAll(Specification<Good> build, Integer page, Integer pageSize);
+    Good update(GoodDto dto);
+
+    Good addCategory(Long goodId, String category);
+
+    Good deleteCategory(Long goodId, String category);
+
+    Good addProducer(Long goodId, Long producerId);
+
+    Good deleteProducer(Long goodId, Long producerId);
+
+    Good findById(Long goodId);
 }

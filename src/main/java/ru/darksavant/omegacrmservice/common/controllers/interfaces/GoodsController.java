@@ -57,7 +57,7 @@ public interface GoodsController {
                                 @Parameter(description = "Цена") @RequestParam(required = false, name = "price") String price);
 
     @PutMapping()
-    @Operation(summary = "Обновление информации о товаре")
+    @Operation(summary = "Обновление информации о товаре: артикул, название, цена, ссылка на общий файл, ссылка на превью, описание")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Информация обновлена успешно",
                     content = {@Content(mediaType = "application/json",
