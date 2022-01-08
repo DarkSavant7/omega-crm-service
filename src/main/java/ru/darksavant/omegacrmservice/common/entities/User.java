@@ -9,14 +9,11 @@ import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Length;
 import ru.darksavant.omegacrmservice.common.enums.UserStatus;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -37,24 +34,20 @@ public class User {
     private Long id;
 
     @NotBlank(message = "Username must NOT be empty")
-    @NotEmpty(message = "Username must NOT be empty")
     @Length(message = "Must be in 4..255 digits", min = 3, max = 255)
-    @NotNull(message = "Username must NOT be empty")
     @Column(name = "username", unique = true)
     private String username;
 
     @NotBlank(message = "Password must NOT be empty")
-    @NotEmpty(message = "Password must NOT be empty")
     @Length(message = "Must be in 8..255 digits", min = 3, max = 255)
-    @NotNull(message = "Password must NOT be empty")
     @Column(name = "password")
     private String password;
 
-    @Column
+    @Column(name = "email")
     @Email(message = "It must be email")
     private String email;
 
-    @NotNull
+    @NotBlank(message = "Status must NOT be empty")
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private UserStatus status;
