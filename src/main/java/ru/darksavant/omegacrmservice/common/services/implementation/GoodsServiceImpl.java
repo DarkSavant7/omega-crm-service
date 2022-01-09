@@ -29,12 +29,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Good findByVendorCode(int code) {
-        return goodRepository.findGoodByVendorCode(code).orElseThrow(() -> new ResourceNotFoundException("Товар не найден"));
+        return goodRepository.findGoodByVendorCode(code).orElseThrow(() -> new ResourceNotFoundException("Товар не найден по - "+code));
     }
 
     @Override
     public Good findByTitle(String title) {
-        return goodRepository.findGoodByTitle(title).orElseThrow(() -> new ResourceNotFoundException("Товар не найден"));
+        return goodRepository.findGoodByTitle(title).orElseThrow(() -> new ResourceNotFoundException("Товар не найден по - "+title));
     }
 
     @Override
@@ -100,7 +100,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public Good addCategory(Long goodId, String category) {
-        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден"));
+        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден по - "+goodId));
         Category categoryEntity = categoryService.findByName(category);
         List<Category> listCategory = good.getCategories();
         if (listCategory.contains(categoryEntity)) {
@@ -115,7 +115,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public Good deleteCategory(Long goodId, String category) {
-        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден"));
+        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден по - "+goodId));
         Category categoryEntity = categoryService.findByName(category);
         List<Category> listCategory = good.getCategories();
         if (listCategory.contains(categoryEntity)) {
@@ -131,7 +131,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public Good addProducer(Long goodId, Long producerId) {
-        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден"));
+        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден по - "+goodId));
         Producer producer = producerService.findByID(producerId);
         List<Producer> producerList = good.getProducers();
         if (producerList.contains(producer)) {
@@ -145,7 +145,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     @Transactional
     public Good deleteProducer(Long goodId, Long producerId) {
-        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден"));
+        Good good = goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден по - "+goodId));
         Producer producer = producerService.findByID(producerId);
         List<Producer> producerList = good.getProducers();
         if (producerList.contains(producer)) {
@@ -159,7 +159,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Good findById(Long goodId) {
-        return goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден"));
+        return goodRepository.findById(goodId).orElseThrow(() -> new ResourceNotFoundException("Товар не найден по - "+goodId));
     }
 
 }

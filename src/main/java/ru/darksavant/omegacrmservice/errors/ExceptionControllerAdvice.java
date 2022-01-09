@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @Slf4j
 public class ExceptionControllerAdvice {
+
+    @ExceptionHandler
+    public ResponseEntity<CrmErrorDto> handleResourceNotFoundException(BadRequestException e) {
+        log.error(e.getMessage());
+        CrmErrorDto err = new CrmErrorDto(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
     @ExceptionHandler
     public ResponseEntity<CrmErrorDto> handleResourceNotFoundException(ResourceNotFoundException e) {
         log.error(e.getMessage());

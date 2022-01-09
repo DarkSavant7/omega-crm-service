@@ -35,14 +35,8 @@ public class GoodsControllerImpl implements GoodsController {
     @Override
     @Transactional
     public ResponseEntity<String> save(String vendorCode, String title, String price) {
-        ResponseEntity<String> response;
-        try {
-            goodsService.save(vendorCode, title, price);
-            response = ResponseEntity.ok().body("Товар успешно создан");
-        } catch (Exception e) {
-            response = ResponseEntity.badRequest().body("Товар не создан");
-        }
-        return response;
+        goodsService.save(vendorCode, title, price);
+        return ResponseEntity.ok().body("Товар успешно создан");
     }
 
     @Override
@@ -52,13 +46,7 @@ public class GoodsControllerImpl implements GoodsController {
 
     @Override
     public ResponseEntity<String> delete(Long id) {
-        ResponseEntity<String> response;
-        try {
-            goodsService.deleteById(id);
-            response = ResponseEntity.ok().body("Товар успешно удален");
-        } catch (Exception e) {
-            response = ResponseEntity.badRequest().body("Ошибка удаления товара");
-        }
-        return response;
+        goodsService.deleteById(id);
+        return ResponseEntity.ok().body("Товар успешно удален");
     }
 }

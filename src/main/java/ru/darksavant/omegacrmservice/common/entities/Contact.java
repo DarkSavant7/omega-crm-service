@@ -9,8 +9,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -40,7 +42,6 @@ public class Contact {
     @Column(name = "position")
     private String position;
 
-
     @Column(name = "primary_phone", unique = true)
     private int primaryPhone;
 
@@ -52,11 +53,12 @@ public class Contact {
 
     @Column(name = "primary_email")
     @NotNull(message = "Email must NOT be empty")
+    @Email(message = "Поле должно быть email")
     private String primaryEmail;
 
     @Column(name = "secondary_email")
+    @Email(message = "Поле должно быть email")
     private String secondaryEmail;
-
 
     @CreationTimestamp
     @Column(name = "created_at")

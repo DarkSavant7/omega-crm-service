@@ -1,10 +1,6 @@
 package ru.darksavant.omegacrmservice.common.services.interfaces;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.darksavant.omegacrmservice.common.entities.Contact;
-import ru.darksavant.omegacrmservice.common.repositories.ContactRepository;
-import ru.darksavant.omegacrmservice.errors.ResourceNotFoundException;
 
 public interface ContactsService {
 
@@ -24,10 +20,9 @@ public interface ContactsService {
 
     Contact findByID(Long id);
 
-    Contact save(Contact contact);
-
     void delete(Contact item);
 
     void deleteById(Long id);
 
+    void save(String fio, String position, Integer primaryPhone, Integer secondaryPhone, String primaryEmail, String secondaryEmail);
 }
