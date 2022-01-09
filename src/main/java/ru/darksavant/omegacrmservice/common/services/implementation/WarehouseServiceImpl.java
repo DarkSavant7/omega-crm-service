@@ -22,7 +22,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public Warehouse findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Warehouse not found"));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Склад не найден по - "+id));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public void addGoodToWarehouse(Long goodId, Long warehouseId) {
-        Warehouse warehouse = repository.findById(warehouseId).orElseThrow(() -> new ResourceNotFoundException("Warehouse not found"));
+        Warehouse warehouse = repository.findById(warehouseId).orElseThrow(() -> new ResourceNotFoundException("Склад не найден по - "+warehouseId));
         Good good = goodsService.findById(goodId);
         List<Good> goodList = warehouse.getGoodList();
         if (goodList.contains(good)) {
@@ -51,7 +51,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public void removeGoodeFromWarehouse(Long goodId, Long warehouseId) {
-        Warehouse warehouse = repository.findById(warehouseId).orElseThrow(() -> new ResourceNotFoundException("Warehouse not found"));
+        Warehouse warehouse = repository.findById(warehouseId).orElseThrow(() -> new ResourceNotFoundException("Склад не найден по - "+warehouseId));
         Good good = goodsService.findById(goodId);
         List<Good> goodList = warehouse.getGoodList();
         if (goodList.contains(good)) {
