@@ -9,11 +9,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import ru.darksavant.omegacrmservice.common.entities.dto.ContactDto;
 import ru.darksavant.omegacrmservice.common.entities.dto.GoodDto;
 import ru.darksavant.omegacrmservice.common.entities.dto.UpdateContactDto;
+
+import javax.validation.constraints.NotNull;
 
 @Tag(name = "Контроллер для контактов")
 @CrossOrigin("*")
@@ -26,12 +29,9 @@ public interface ContactsController {
             @ApiResponse(responseCode = "200", description = "Товары успешно найдены в системе",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = GoodDto.class))})})
-    ResponseEntity<Page<GoodDto>> findContacts(@Parameter(hidden = true) @RequestParam(name = "page", defaultValue = "1") Integer page,
+    ResponseEntity<Page<ContactDto>> findContacts(@Parameter(hidden = true) @RequestParam(name = "page", defaultValue = "1") Integer page,
                                             @Parameter(hidden = true) @RequestParam(name = "page_size", defaultValue = "10") Integer pageSize,
-                                            @Parameter(description = "ФИО") @RequestParam(required = false, name = "FIO") @Nullable String FIO,
-                                            @Parameter(description = "Должность") @RequestParam(required = false, name = "position") @Nullable String position,
-                                            @Parameter(description = "Телефон") @RequestParam(required = false, name = "phone") @Nullable Integer phone,
-                                            @Parameter(description = "Email") @RequestParam(required = false, name = "email") @Nullable String email);
+                                            @Parameter(description = "Запрос") @RequestParam(required = false, name = "request") @NotNull String requestString);
 
     @GetMapping("/{id}")
     @Operation(summary = "Поиск контакта по ID")

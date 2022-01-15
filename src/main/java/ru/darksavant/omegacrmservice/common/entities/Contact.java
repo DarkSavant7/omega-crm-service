@@ -43,13 +43,13 @@ public class Contact {
     private String position;
 
     @Column(name = "primary_phone", unique = true)
-    private int primaryPhone;
+    private Integer primaryPhone;
 
     @Column(name = "mobile_phone")
-    private int mobilePhone;
+    private Integer mobilePhone;
 
     @Column(name = "work_phone")
-    private int workPhone;
+    private Integer workPhone;
 
     @Column(name = "primary_email")
     @NotNull(message = "Email must NOT be empty")
