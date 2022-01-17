@@ -5,22 +5,26 @@ import ru.darksavant.omegacrmservice.common.entities.Good;
 
 public class GoodsSpecification {
 
-    public static Specification<Good> build(String title,String description, String category) {
+    public static Specification<Good> build(String title, String description, String category) {
         Specification<Good> spec = Specification.where(null);
-        if (description!=null){
-            spec=spec.and(GoodsSpecification.descriptionContain(description));
+        if (description != null) {
+            spec = spec.and(GoodsSpecification.descriptionContain(description));
         }
-        if (title!=null){
-            spec=spec.and(GoodsSpecification.titleContains(title));
+        if (title != null) {
+            spec = spec.and(GoodsSpecification.titleContains(title));
         }
-        if(category!=null){
-            spec=spec.and(GoodsSpecification.categoryEquals(category));
+        if (category != null) {
+            spec = spec.and(GoodsSpecification.categoryEquals(category));
         }
         return spec;
     }
 
     private static Specification<Good> categoryEquals(String category) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("categories"), category); //todo - Точно по другому должно быть, там возвращается List
+        return (root, criteriaQuery, criteriaBuilder) -> {
+            criteriaQuery.distinct(true);
+            return criteriaBuilder.like(
+                    root.join("categories").get("name"), category);
+        };
     }
 
     private static Specification<Good> titleContains(String title) {

@@ -5,13 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 import ru.darksavant.omegacrmservice.common.controllers.interfaces.ContactsController;
 import ru.darksavant.omegacrmservice.common.entities.dto.ContactDto;
-import ru.darksavant.omegacrmservice.common.entities.dto.GoodDto;
 import ru.darksavant.omegacrmservice.common.entities.dto.UpdateContactDto;
+import ru.darksavant.omegacrmservice.common.repositories.specifications.ContactsSpecification;
 import ru.darksavant.omegacrmservice.common.services.interfaces.ContactsService;
+
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,8 +21,8 @@ public class ContactControllerImpl implements ContactsController {
     private final ContactsService contactsService;
 
     @Override
-    public ResponseEntity<Page<GoodDto>> findContacts(Integer page, Integer pageSize, @Nullable String FIO, @Nullable String position, @Nullable Integer phone, @Nullable String email) {
-        return null;
+    public ResponseEntity<Page<ContactDto>> findContacts(Integer page, Integer pageSize, @NotNull String requestString) {
+        return ResponseEntity.ok().body(contactsService.findAll(ContactsSpecification.build(requestString),page,pageSize).map(ContactDto::new));
     }
 
     @Override
@@ -37,11 +38,12 @@ public class ContactControllerImpl implements ContactsController {
 
     @Override
     public ResponseEntity<ContactDto> update(UpdateContactDto dto) {
-        return null;
+        return ResponseEntity.ok().body(new ContactDto(contactsService.update(dto)));
     }
 
     @Override
     public ResponseEntity<String> delete(Long id) {
-        return null;
+        contactsService.deleteById(id);
+        return ResponseEntity.ok().body("Контакт успешно удален");
     }
 }

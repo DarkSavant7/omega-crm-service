@@ -1,12 +1,17 @@
 package ru.darksavant.omegacrmservice.common.services.interfaces;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import ru.darksavant.omegacrmservice.common.entities.Contact;
+import ru.darksavant.omegacrmservice.common.entities.dto.UpdateContactDto;
+
+import java.util.List;
 
 public interface ContactsService {
 
     Contact findByFIO(String fio);
 
-    Contact findByPosition(String pos);
+    List<Contact> findByPosition(String pos);
 
     Contact findByPrimaryPhone(int phone);
 
@@ -18,6 +23,8 @@ public interface ContactsService {
 
     Contact findBySecondaryEmail(String email);
 
+    Page<Contact> findAll(Specification<Contact> build, Integer page, Integer pageSize);
+
     Contact findByID(Long id);
 
     void delete(Contact item);
@@ -25,4 +32,6 @@ public interface ContactsService {
     void deleteById(Long id);
 
     void save(String fio, String position, Integer primaryPhone, Integer secondaryPhone, String primaryEmail, String secondaryEmail);
+
+    Contact update(UpdateContactDto dto);
 }
